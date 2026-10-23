@@ -1,0 +1,2922 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>عيادة دكتور جلهوم - نظام المتابعات وشيفت الجمعة</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', 'Inter', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen pb-24 select-none">
+
+  <!-- Top App Bar -->
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200 px-4 py-3 shadow-sm">
+    <div class="max-w-md mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-600 to-teal-400 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="text-base font-bold text-slate-900 leading-tight">عيادة دكتور جلهوم</h1>
+          <p class="text-xs text-brand-600 font-semibold flex items-center gap-1 cursor-pointer" id="header-shift-badge" title="اضغط لتعديل ساعات الشيفت">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span id="label-header-shift-hours">شيفت الجمعة (4:00 - 10:00 م)</span>
+          </p>
+        </div>
+      </div>
+      <div class="flex items-center gap-1">
+        <button id="btn-open-shift-settings" class="p-2 text-slate-500 hover:text-brand-600 hover:bg-slate-100 rounded-lg transition" title="تعديل أوقات وساعات الشيفت">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+          </svg>
+        </button>
+        <button id="btn-export-data" class="p-2 text-slate-500 hover:text-brand-600 hover:bg-slate-100 rounded-lg transition" title="تصدير نسخة احتياطية">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+          </svg>
+        </button>
+        <button id="btn-open-quick-add" class="flex items-center gap-1 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-3 py-2 rounded-xl shadow-sm transition active:scale-95">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+          </svg>
+          مريض جديد
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-md mx-auto px-4 pt-4">
+
+    <!-- View 1: Calendar & Shifts -->
+    <section id="view-calendar" class="space-y-4">
+      <!-- Date Selector / Navigation -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+        <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-400">تاريخ الشيفت:</span>
+            <span id="label-selected-date" class="text-sm font-bold text-slate-800">الجمعة، 23 أكتوبر 2026</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button id="btn-jump-next-friday" class="text-xs bg-brand-50 text-brand-700 font-bold px-2.5 py-1 rounded-lg border border-brand-200 hover:bg-brand-100 transition">
+              الجمعة القادمة
+            </button>
+            <button id="btn-calendar-edit-shift" class="text-xs bg-slate-50 text-slate-600 font-bold px-2.5 py-1 rounded-lg border border-slate-200 hover:bg-slate-100 transition flex items-center gap-1" title="تعديل أوقات الشيفت">
+              <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              ساعات الشيفت
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 overflow-x-auto pb-1 custom-scrollbar" id="friday-chips-container">
+          <!-- Populated by JS -->
+        </div>
+        <div class="flex items-center justify-between gap-2 mt-2.5 pt-2.5 border-t border-slate-100">
+          <label class="text-[11px] font-bold text-slate-500 whitespace-nowrap">أو اختر أي يوم حر:</label>
+          <input type="date" id="input-calendar-free-date" value="2026-10-23" class="bg-slate-50 border border-slate-200 rounded-lg px-2.5 py-1 text-xs font-mono text-slate-700 focus:outline-none focus:border-brand-500">
+        </div>
+      </div>
+
+      <!-- Quick Stats on Selected Day -->
+      <div class="grid grid-cols-3 gap-2">
+        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-center">
+          <span class="block text-xl font-black text-slate-800" id="stat-day-total">0</span>
+          <span class="text-[11px] font-semibold text-slate-500">حالات اليوم</span>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-center">
+          <span class="block text-xl font-black text-emerald-600" id="stat-day-completed">0</span>
+          <span class="text-[11px] font-semibold text-slate-500">تم إنجازها</span>
+        </div>
+        <div class="bg-white p-3 rounded-xl border border-slate-200 shadow-sm text-center">
+          <span class="block text-xl font-black text-amber-500" id="stat-day-pending">0</span>
+          <span class="text-[11px] font-semibold text-slate-500">متبقية</span>
+        </div>
+      </div>
+
+      <!-- Appointments List for Selected Day -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between px-1">
+          <div>
+            <h2 class="text-xs font-bold text-slate-500 uppercase tracking-wider">مواعيد الشيفت بالترتيب الزمني</h2>
+            <span class="text-[11px] text-brand-600 font-bold" id="label-shift-range-subtitle">من 4:00 إلى 10:00 مساءً</span>
+          </div>
+          <button id="btn-calendar-add-appointment" class="flex items-center gap-1 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow-sm transition active:scale-95">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            إضافة موعد بالكاليندر
+          </button>
+        </div>
+        <div id="day-appointments-list" class="space-y-2.5">
+          <!-- Populated dynamically -->
+        </div>
+      </div>
+    </section>
+
+    <!-- View 2: Patients Directory -->
+    <section id="view-patients" class="hidden space-y-4">
+      <!-- Search & Filters -->
+      <div class="bg-white rounded-2xl p-3 shadow-sm border border-slate-200 space-y-2.5">
+        <div class="relative">
+          <input type="text" id="input-patient-search" placeholder="ابحث باسم المريض، رقم الهاتف، أو الإجراء..." class="w-full bg-slate-50 border border-slate-200 rounded-xl py-2.5 pr-10 pl-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 transition">
+          <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-slate-400">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-xs font-semibold custom-scrollbar">
+          <button class="filter-chip active px-3 py-1.5 rounded-lg bg-brand-600 text-white transition whitespace-nowrap" data-filter="all">جميع الحالات (<span id="count-all-patients">0</span>)</button>
+          <button class="filter-chip px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition whitespace-nowrap" data-filter="has-upcoming">مواعيد قادمة</button>
+          <button class="filter-chip px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition whitespace-nowrap" data-filter="has-balance">متبقي مالي</button>
+          <button class="filter-chip px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200 transition whitespace-nowrap" data-filter="overdue">متابعات متأخرة</button>
+        </div>
+      </div>
+
+      <!-- Patients List Cards -->
+      <div id="patients-directory-list" class="space-y-2.5">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- View 3: Patient Profile Detail -->
+    <section id="view-patient-detail" class="hidden space-y-4">
+      <div class="flex items-center justify-between">
+        <button id="btn-back-from-detail" class="flex items-center gap-1 text-xs font-bold text-slate-600 hover:text-brand-600 bg-white border border-slate-200 px-3 py-1.5 rounded-xl shadow-sm transition">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+          </svg>
+          العودة للقائمة
+        </button>
+        <div class="flex items-center gap-1.5">
+          <button id="btn-edit-patient-info" class="text-xs font-bold text-brand-600 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-3 py-1.5 rounded-xl transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
+            </svg>
+            تعديل البيانات
+          </button>
+          <button id="btn-delete-patient-prompt" class="text-xs font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-3 py-1.5 rounded-xl transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+            </svg>
+            مسح
+          </button>
+        </div>
+      </div>
+
+      <!-- Patient Header Card -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-3">
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 id="detail-patient-name" class="text-lg font-black text-slate-900 leading-tight">اسم المريض</h2>
+            <p id="detail-patient-phone" class="text-xs text-slate-500 font-mono mt-0.5" dir="ltr">+20 100 000 0000</p>
+          </div>
+          <span id="detail-patient-alert" class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+            لا توجد موانع طبية
+          </span>
+        </div>
+
+        <div class="p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-xs">
+          <span class="font-bold text-slate-500 block mb-0.5">خطة العلاج / التشخيص:</span>
+          <p id="detail-patient-plan" class="text-slate-800 font-medium">متابعة تقويم - Class II</p>
+        </div>
+
+        <!-- Financial Summary Bar -->
+        <div class="grid grid-cols-3 gap-2 pt-1 border-t border-slate-100 text-center">
+          <div>
+            <span class="text-[10px] text-slate-400 font-bold block">إجمالي الخطة</span>
+            <span id="detail-financial-total" class="text-xs font-black text-slate-700">0 ج.م</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-slate-400 font-bold block">المدفوع</span>
+            <span id="detail-financial-paid" class="text-xs font-black text-emerald-600">0 ج.م</span>
+          </div>
+          <div>
+            <span class="text-[10px] text-slate-400 font-bold block">المتبقي</span>
+            <span id="detail-financial-balance" class="text-xs font-black text-rose-600">0 ج.م</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <button id="btn-add-payment-modal" class="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold py-2 rounded-xl transition flex items-center justify-center gap-1">
+            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+            </svg>
+            تسجيل دفعة نقدية
+          </button>
+        </div>
+
+        <!-- Dated Payments History Log -->
+        <div class="pt-2 border-t border-slate-100 space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-bold text-slate-600">سجل الدفعات المالية بالتاريخ:</span>
+            <span id="detail-payments-count" class="text-[10px] font-semibold text-slate-400">0 دفعات</span>
+          </div>
+          <div id="detail-payments-history-list" class="space-y-1.5 max-h-40 overflow-y-auto custom-scrollbar">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Session (Card) -->
+      <div class="bg-gradient-to-br from-brand-50 to-teal-50/40 rounded-2xl p-4 border border-brand-200 shadow-sm space-y-3">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-1.5">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-600 animate-ping"></span>
+            <h3 class="text-xs font-black text-brand-900 uppercase">الجلسة القادمة المجدولة</h3>
+          </div>
+          <div class="flex items-center gap-1">
+            <button id="btn-patient-whatsapp-reminder" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition flex items-center gap-1" title="تذكير المريض عبر واتساب">
+              <span>تذكير واتساب</span>
+            </button>
+            <span id="detail-upcoming-status" class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-brand-200 text-brand-800">مؤكدة</span>
+          </div>
+        </div>
+
+        <div id="detail-upcoming-content" class="space-y-2">
+          <!-- Dynamic upcoming info -->
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <button id="btn-complete-upcoming-session" class="flex-1 bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold py-2.5 px-3 rounded-xl shadow-md shadow-brand-500/20 transition flex items-center justify-center gap-1 active:scale-95">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            إتمام الجلسة وترحيلها للهيستوري
+          </button>
+          <button id="btn-reschedule-upcoming" class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 text-xs font-bold py-2.5 px-3 rounded-xl transition">
+            تعديل الموعد
+          </button>
+        </div>
+      </div>
+
+      <!-- Schedule Next Session & Add Past Session Buttons -->
+      <div class="flex items-center justify-between px-1 gap-1.5">
+        <h3 class="text-xs font-bold text-slate-700">سجل الجلسات السابقة (History)</h3>
+        <div class="flex items-center gap-1.5">
+          <button id="btn-add-past-session-modal" class="text-xs font-bold text-slate-700 bg-white hover:bg-slate-100 border border-slate-200 px-2.5 py-1.5 rounded-xl shadow-sm transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            إضافة جلسة سابقة
+          </button>
+          <button id="btn-schedule-new-session" class="text-xs font-bold text-brand-600 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-2.5 py-1.5 rounded-xl transition flex items-center gap-1">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            حجز موعد جديد
+          </button>
+        </div>
+      </div>
+
+      <!-- Past Sessions Timeline -->
+      <div id="detail-past-sessions-timeline" class="space-y-2.5">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- View 4: Finances & Summary -->
+    <section id="view-finances" class="hidden space-y-4">
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-3">
+        <h2 class="text-sm font-bold text-slate-900">الملخص المالي العام للعيادة</h2>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <span class="text-xs text-slate-500 font-semibold block mb-1">إجمالي الحالات المسجلة</span>
+            <span class="text-2xl font-black text-slate-800" id="finance-total-patients">0</span>
+          </div>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <span class="text-xs text-slate-500 font-semibold block mb-1">إجمالي تكلفة الخطط</span>
+            <span class="text-2xl font-black text-brand-700" id="finance-total-revenue">0 ج.م</span>
+          </div>
+          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+            <span class="text-xs text-emerald-700 font-semibold block mb-1">إجمالي المحصل</span>
+            <span class="text-2xl font-black text-emerald-800" id="finance-total-collected">0 ج.م</span>
+          </div>
+          <div class="bg-rose-50 p-3 rounded-xl border border-rose-200">
+            <span class="text-xs text-rose-700 font-semibold block mb-1">مستحقات متبقية</span>
+            <span class="text-2xl font-black text-rose-800" id="finance-total-remaining">0 ج.م</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Data Backup & Reset Box -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-3">
+        <h3 class="text-xs font-bold text-slate-700">إدارة البيانات والأمان</h3>
+        <p class="text-xs text-slate-500 leading-relaxed">
+          جميع بياناتك مخزنة محلياً بأمان داخل جهازك (LocalStorage). يمكنك تحميل نسخة احتياطية أو استعادتها في أي وقت.
+        </p>
+        <div class="flex items-center gap-2">
+          <button id="btn-export-json" class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-2.5 rounded-xl border border-slate-300 transition flex items-center justify-center gap-1">
+            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            تصدير نسخة JSON
+          </button>
+          <label class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-800 font-bold text-xs py-2.5 rounded-xl border border-slate-300 transition flex items-center justify-center gap-1 cursor-pointer">
+            <svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l4-4m0 0l4 4m-4-4v12"></path>
+            </svg>
+            استيراد نسخة
+            <input type="file" id="input-import-json" accept=".json" class="hidden">
+          </label>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Bottom Navigation Bar (Mobile Native Style) -->
+  <nav class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-30 py-1.5 shadow-lg">
+    <div class="max-w-md mx-auto grid grid-cols-3 px-3">
+      <button class="nav-tab active flex flex-col items-center justify-center py-1.5 text-brand-600 transition" data-target="view-calendar">
+        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+        </svg>
+        <span class="text-[11px] font-bold">الشيفت والتقويم</span>
+      </button>
+
+      <button class="nav-tab flex flex-col items-center justify-center py-1.5 text-slate-400 hover:text-slate-600 transition" data-target="view-patients">
+        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <span class="text-[11px] font-bold">المرضى</span>
+      </button>
+
+      <button class="nav-tab flex flex-col items-center justify-center py-1.5 text-slate-400 hover:text-slate-600 transition" data-target="view-finances">
+        <svg class="w-5 h-5 mb-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+        </svg>
+        <span class="text-[11px] font-bold">الحسابات</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Modal 1: Add New Patient -->
+  <div id="modal-add-patient" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-900">إضافة مريض جديد</h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form id="form-new-patient" class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">اسم المريض *</label>
+          <input type="text" id="input-new-name" required placeholder="مثال: يوسف أحمد" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف</label>
+          <input type="tel" id="input-new-phone" placeholder="010XXXXXXXX" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">التنبيه الطبي / الحساسية</label>
+          <select id="input-new-alert" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+            <option value="لا توجد موانع طبية">لا توجد موانع طبية</option>
+            <option value="حساسية بنسلين">حساسية بنسلين (Penicillin Allergy)</option>
+            <option value="ضغط مرتفع">ضغط مرتفع (Hypertension)</option>
+            <option value="سكر">سكر (Diabetes)</option>
+            <option value="سيولة دم">سيولة دم (Bleeding Tendency)</option>
+            <option value="حساسية بنج موضعي">حساسية بنج موضعي</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">خطة العلاج / التشخيص</label>
+          <input type="text" id="input-new-plan" placeholder="مثال: تقويم Twinblock / علاج جذور" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">إجمالي التكلفة (ج.م)</label>
+            <input type="number" id="input-new-total" value="0" min="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">الدفعة المقدمة (ج.م)</label>
+            <input type="number" id="input-new-paid" value="0" min="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm py-2.5 rounded-xl shadow-md shadow-brand-500/20 transition">
+            حفظ المريض وفتح ملفه
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Schedule / Add Next Session -->
+  <div id="modal-schedule-session" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-900">جدولة موعد / جلسة جديدة</h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form id="form-schedule-session" class="space-y-3">
+        <input type="hidden" id="input-session-patient-id">
+
+        <!-- Patient Picker (Choose Patient directly when scheduling from Calendar!) -->
+        <div>
+          <div class="flex items-center justify-between mb-1">
+            <label class="block text-xs font-bold text-slate-700">اختر المريض (Patient) *</label>
+            <button type="button" id="btn-modal-quick-new-patient" class="text-[10px] font-bold text-brand-600 hover:underline">+ إضافة مريض جديد</button>
+          </div>
+          <select id="select-session-patient" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+            <!-- Populated with patients list -->
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">تاريخ الجلسة القادمة *</label>
+          <input type="date" id="input-session-date" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div class="space-y-2">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-slate-700">توقيت الجلسة (من البداية للنهاية بحرية) *</label>
+            <span class="text-[10px] text-brand-600 font-semibold" id="label-modal-shift-info">ساعات الشيفت</span>
+          </div>
+          <div class="grid grid-cols-2 gap-2 bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 mb-1">من الساعة (البداية)</label>
+              <input type="time" id="input-session-start-24" value="16:00" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-800 focus:outline-none focus:border-brand-500">
+            </div>
+            <div>
+              <label class="block text-[10px] font-bold text-slate-500 mb-1">إلى الساعة (النهاية)</label>
+              <input type="time" id="input-session-end-24" value="17:00" class="w-full bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-mono text-slate-800 focus:outline-none focus:border-brand-500">
+            </div>
+          </div>
+          <div>
+            <label class="block text-[10px] font-bold text-slate-400 mb-1">أو اختر سريعاً من تقسيمات الشيفت:</label>
+            <select id="input-session-time" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+              <!-- Dynamically populated from custom shift hours -->
+            </select>
+            <div id="container-custom-time" class="hidden flex items-center gap-2 p-2 mt-1 bg-slate-50 rounded-xl border border-slate-200">
+              <span class="text-xs text-slate-600 font-bold whitespace-nowrap">أو صيغة نصية حرة:</span>
+              <input type="text" id="input-session-custom-time" placeholder="مثال: 6:00 PM → 7:30 PM" class="flex-1 bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs text-slate-800 focus:outline-none focus:ring-1 focus:ring-brand-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. Ortho Procedure Select + Add New Option -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-slate-700">إجراء التقويم (Ortho Procedure) *</label>
+            <div class="flex items-center gap-1 text-[10px]">
+              <button type="button" class="btn-quick-tooth bg-slate-100 hover:bg-brand-50 text-slate-600 hover:text-brand-700 px-1.5 py-0.5 rounded font-bold" data-val="فك علوي">فك علوي</button>
+              <button type="button" class="btn-quick-tooth bg-slate-100 hover:bg-brand-50 text-slate-600 hover:text-brand-700 px-1.5 py-0.5 rounded font-bold" data-val="فك سفلي">فك سفلي</button>
+              <button type="button" class="btn-quick-tooth bg-slate-100 hover:bg-brand-50 text-slate-600 hover:text-brand-700 px-1.5 py-0.5 rounded font-bold" data-val="أمامية">أمامية</button>
+              <button type="button" class="btn-toggle-add-option bg-brand-50 hover:bg-brand-100 text-brand-700 border border-brand-200 px-2 py-0.5 rounded font-bold" data-target="box-add-proc-sched">+ خيار جديد</button>
+              <button type="button" class="btn-open-manage-options bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 px-2 py-0.5 rounded font-bold" data-cat="procedures">تعديل الخيارات</button>
+            </div>
+          </div>
+          <select id="input-session-procedure" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+            <!-- Populated dynamically -->
+          </select>
+          <datalist id="procedure-presets"></datalist>
+          <div id="box-add-proc-sched" class="hidden flex items-center gap-1.5 p-2 bg-brand-50/60 rounded-xl border border-brand-200">
+            <input type="text" id="input-new-opt-proc-sched" placeholder="اكتب إجراء تقويم جديد..." class="flex-1 bg-white border border-brand-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none">
+            <button type="button" id="btn-save-opt-proc-sched" class="bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-lg">إضافة</button>
+          </div>
+        </div>
+
+        <!-- 2. Wire Size & 3. Wire Type Selects + Add/Edit Option -->
+        <div class="grid grid-cols-2 gap-2">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-slate-700">مقاس الواير (Wire)</label>
+              <div class="flex items-center gap-1">
+                <button type="button" class="btn-toggle-add-option text-[10px] font-bold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded border border-brand-200" data-target="box-add-wire-sched">+ جديد</button>
+                <button type="button" class="btn-open-manage-options text-[10px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200" data-cat="wires">تعديل</button>
+              </div>
+            </div>
+            <select id="input-session-wire" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:border-brand-500">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-slate-700">نوع الواير (Type)</label>
+              <div class="flex items-center gap-1">
+                <button type="button" class="btn-toggle-add-option text-[10px] font-bold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded border border-brand-200" data-target="box-add-wiretype-sched">+ جديد</button>
+                <button type="button" class="btn-open-manage-options text-[10px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200" data-cat="wireTypes">تعديل</button>
+              </div>
+            </div>
+            <select id="input-session-wire-type" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:border-brand-500">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div id="box-add-wire-sched" class="hidden flex items-center gap-1.5 p-2 bg-brand-50/60 rounded-xl border border-brand-200">
+          <input type="text" id="input-new-opt-wire-sched" placeholder="اكتب مقاس واير جديد (مثال: 17x25 U)..." class="flex-1 bg-white border border-brand-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none">
+          <button type="button" id="btn-save-opt-wire-sched" class="bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-lg">إضافة</button>
+        </div>
+
+        <div id="box-add-wiretype-sched" class="hidden flex items-center gap-1.5 p-2 bg-brand-50/60 rounded-xl border border-brand-200">
+          <input type="text" id="input-new-opt-wiretype-sched" placeholder="اكتب نوع واير جديد (مثال: CuNiTi)..." class="flex-1 bg-white border border-brand-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none">
+          <button type="button" id="btn-save-opt-wiretype-sched" class="bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-lg">إضافة</button>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">ملاحظات سريرية مقدماً</label>
+          <textarea id="input-session-notes" rows="2" placeholder="أي تفاصيل أو أدوات تجهيز خاصة بالجلسة..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"></textarea>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm py-2.5 rounded-xl shadow-md shadow-brand-500/20 transition">
+            حفظ وتأكيد الموعد
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Complete Session (Automated Move to History) -->
+  <div id="modal-complete-session" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">إتمام الجلسة وتوثيق الإجراء</h3>
+          <p class="text-xs text-brand-600 font-semibold">سيتم نقلها تلقائياً إلى تاريخ الجلسات السابقة</p>
+        </div>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form id="form-complete-session" class="space-y-3">
+        <input type="hidden" id="input-complete-patient-id">
+
+        <!-- Ortho Procedure Done in Session -->
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-slate-700">خيار التقويم الذي تم في الجلسة *</label>
+            <div class="flex items-center gap-1">
+              <button type="button" class="btn-toggle-add-option text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded border border-brand-200" data-target="box-add-proc-comp">+ خيار جديد</button>
+              <button type="button" class="btn-open-manage-options text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200" data-cat="procedures">تعديل الخيارات</button>
+            </div>
+          </div>
+          <select id="input-complete-procedure" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+            <!-- Populated dynamically -->
+          </select>
+          <div id="box-add-proc-comp" class="hidden flex items-center gap-1.5 p-2 bg-brand-50/60 rounded-xl border border-brand-200">
+            <input type="text" id="input-new-opt-proc-comp" placeholder="اكتب إجراء تقويم جديد..." class="flex-1 bg-white border border-brand-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none">
+            <button type="button" id="btn-save-opt-proc-comp" class="bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-lg">إضافة</button>
+          </div>
+        </div>
+
+        <!-- Wire Size & Wire Type Done in Session -->
+        <div class="grid grid-cols-2 gap-2">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-slate-700">مقاس الواير (Wire)</label>
+              <div class="flex items-center gap-1">
+                <button type="button" class="btn-toggle-add-option text-[10px] font-bold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded border border-brand-200" data-target="box-add-wire-comp">+ جديد</button>
+                <button type="button" class="btn-open-manage-options text-[10px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200" data-cat="wires">تعديل</button>
+              </div>
+            </div>
+            <select id="input-complete-wire" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:border-brand-500">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-slate-700">نوع الواير (Type)</label>
+              <div class="flex items-center gap-1">
+                <button type="button" class="btn-toggle-add-option text-[10px] font-bold text-brand-600 bg-brand-50 px-1.5 py-0.5 rounded border border-brand-200" data-target="box-add-wiretype-comp">+ جديد</button>
+                <button type="button" class="btn-open-manage-options text-[10px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200" data-cat="wireTypes">تعديل</button>
+              </div>
+            </div>
+            <select id="input-complete-wire-type" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:border-brand-500">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div id="box-add-wire-comp" class="hidden flex items-center gap-1.5 p-2 bg-brand-50/60 rounded-xl border border-brand-200">
+          <input type="text" id="input-new-opt-wire-comp" placeholder="اكتب مقاس واير جديد..." class="flex-1 bg-white border border-brand-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none">
+          <button type="button" id="btn-save-opt-wire-comp" class="bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-lg">إضافة</button>
+        </div>
+
+        <div id="box-add-wiretype-comp" class="hidden flex items-center gap-1.5 p-2 bg-brand-50/60 rounded-xl border border-brand-200">
+          <input type="text" id="input-new-opt-wiretype-comp" placeholder="اكتب نوع واير جديد..." class="flex-1 bg-white border border-brand-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none">
+          <button type="button" id="btn-save-opt-wiretype-comp" class="bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-lg">إضافة</button>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">ملاحظات الجلسة (Clinical Notes)</label>
+          <textarea id="input-complete-notes" rows="2" placeholder="مثال: تم تركيب الـ TPA بنجاح، المريض ملتزم بالمطاط..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">المبلغ المحصل في هذه الجلسة (ج.م)</label>
+          <input type="number" id="input-complete-payment" value="0" min="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div class="p-3 bg-brand-50 rounded-xl border border-brand-200 space-y-2">
+          <label class="block text-xs font-bold text-brand-900">تحديد موعد الجلسة القادمة مباشرة؟ (اختياري)</label>
+          <div class="grid grid-cols-2 gap-2">
+            <input type="date" id="input-next-after-complete-date" class="bg-white border border-brand-200 rounded-lg px-2 py-1.5 text-xs text-slate-800">
+            <select id="input-next-after-complete-procedure" class="bg-white border border-brand-200 rounded-lg px-2 py-1.5 text-xs text-slate-800">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm py-2.5 rounded-xl shadow-md shadow-emerald-500/20 transition">
+            تأكيد الترحيل إلى التاريخ وتحديث الملف
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 4: Record / Edit Payment with Date -->
+  <div id="modal-record-payment" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 id="modal-payment-title" class="text-base font-bold text-slate-900">تسجيل دفعة نقدية جديدة</h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+      <form id="form-record-payment" class="space-y-3">
+        <input type="hidden" id="input-payment-patient-id">
+        <input type="hidden" id="input-payment-edit-id">
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">المبلغ المدفوع (ج.م) *</label>
+            <input type="number" id="input-payment-amount" required min="1" placeholder="مثال: 500" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">تاريخ الدفعة *</label>
+            <input type="date" id="input-payment-date" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+          </div>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">ملاحظات الدفعة / البيان</label>
+          <input type="text" id="input-payment-note" placeholder="مثال: دفعة مقدم / قسط شهري / دفعة تركيب" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm py-2.5 rounded-xl shadow-md transition">
+            تسجيل الدفعة وتحديث الرصيد
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 8: Edit or Add Past Session (تعديل / إضافة جلسة سابقة) -->
+  <div id="modal-edit-past-session" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 id="modal-past-session-title" class="text-base font-bold text-slate-900">تعديل بيانات الجلسة السابقة</h3>
+          <p class="text-xs text-brand-600 font-semibold">تحديث التاريخ، الإجراء، الواير، أو الملاحظات</p>
+        </div>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form id="form-edit-past-session" class="space-y-3">
+        <input type="hidden" id="input-past-session-patient-id">
+        <input type="hidden" id="input-past-session-id">
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">تاريخ الجلسة *</label>
+            <input type="date" id="input-past-session-date" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono focus:outline-none focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">وقت الجلسة</label>
+            <input type="text" id="input-past-session-time" placeholder="مثال: 05:00 PM" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono focus:outline-none focus:border-brand-500">
+          </div>
+        </div>
+
+        <div class="space-y-1.5">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-slate-700">الإجراء الذي تم في الجلسة *</label>
+            <div class="flex items-center gap-1">
+              <button type="button" class="btn-toggle-add-option text-[10px] font-bold text-brand-600 bg-brand-50 px-2 py-0.5 rounded border border-brand-200" data-target="box-add-proc-past">+ خيار جديد</button>
+              <button type="button" class="btn-open-manage-options text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200" data-cat="procedures">تعديل الخيارات</button>
+            </div>
+          </div>
+          <select id="input-past-session-procedure" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-500">
+            <!-- Populated dynamically -->
+          </select>
+          <div id="box-add-proc-past" class="hidden flex items-center gap-1.5 p-2 bg-brand-50/60 rounded-xl border border-brand-200">
+            <input type="text" id="input-new-opt-proc-past" placeholder="اكتب إجراء تقويم جديد..." class="flex-1 bg-white border border-brand-200 rounded-lg px-2.5 py-1 text-xs focus:outline-none">
+            <button type="button" id="btn-save-opt-proc-past" class="bg-brand-600 text-white text-xs font-bold px-3 py-1 rounded-lg">إضافة</button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-slate-700">مقاس الواير (Wire)</label>
+              <button type="button" class="btn-open-manage-options text-[10px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200" data-cat="wires">تعديل</button>
+            </div>
+            <select id="input-past-session-wire" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:border-brand-500">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center justify-between">
+              <label class="block text-xs font-bold text-slate-700">نوع الواير (Type)</label>
+              <button type="button" class="btn-open-manage-options text-[10px] font-bold text-amber-800 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200" data-cat="wireTypes">تعديل</button>
+            </div>
+            <select id="input-past-session-wire-type" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-2 text-xs focus:outline-none focus:border-brand-500">
+              <!-- Populated dynamically -->
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">ملاحظات الجلسة (Clinical Notes)</label>
+          <textarea id="input-past-session-notes" rows="2" placeholder="تفاصيل ما تم في الجلسة..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-500"></textarea>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">المبلغ المدفوع في هذه الجلسة (ج.م)</label>
+          <input type="number" id="input-past-session-payment" value="0" min="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-brand-500">
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm py-2.5 rounded-xl shadow-md transition">
+            حفظ بيانات الجلسة السابقة
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 5: Edit Patient -->
+  <div id="modal-edit-patient" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h3 class="text-base font-bold text-slate-900">تعديل بيانات المريض</h3>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form id="form-edit-patient" class="space-y-3">
+        <input type="hidden" id="input-edit-patient-id">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">اسم المريض *</label>
+          <input type="text" id="input-edit-name" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">رقم الهاتف</label>
+          <input type="tel" id="input-edit-phone" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">التنبيه الطبي / الحساسية</label>
+          <select id="input-edit-alert" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+            <option value="لا توجد موانع طبية">لا توجد موانع طبية</option>
+            <option value="حساسية بنسلين">حساسية بنسلين (Penicillin Allergy)</option>
+            <option value="ضغط مرتفع">ضغط مرتفع (Hypertension)</option>
+            <option value="سكر">سكر (Diabetes)</option>
+            <option value="سيولة دم">سيولة دم (Bleeding Tendency)</option>
+            <option value="حساسية بنج موضعي">حساسية بنج موضعي</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">خطة العلاج / التشخيص</label>
+          <input type="text" id="input-edit-plan" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">إجمالي التكلفة (ج.م)</label>
+            <input type="number" id="input-edit-total" min="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">المدفوع الكلي (ج.م)</label>
+            <input type="number" id="input-edit-paid" min="0" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+          </div>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm py-2.5 rounded-xl shadow-md shadow-brand-500/20 transition">
+            حفظ التعديلات وتحديث الملف
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 6: Confirm Delete Patient -->
+  <div id="modal-confirm-delete" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 transition">
+    <div class="bg-white w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4 text-center">
+      <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center mx-auto">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+        </svg>
+      </div>
+      <div>
+        <h3 class="text-base font-bold text-slate-900">مسح ملف المريض نهائياً</h3>
+        <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+          هل أنت متأكد من مسح ملف المريض <span id="delete-patient-name-span" class="font-bold text-slate-800"></span>؟ سيتم مسح كافة سجلاته ومواعيده السابقة والقادمة نهائياً.
+        </p>
+      </div>
+      <div class="flex items-center gap-2 pt-1">
+        <button id="btn-confirm-delete-action" class="flex-1 bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs py-2.5 rounded-xl shadow-md transition">
+          نعم، مسح الملف
+        </button>
+        <button class="btn-close-modal flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs py-2.5 rounded-xl transition">
+          إلغاء
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 7: Shift Settings (Customize Shift Hours) -->
+  <div id="modal-shift-settings" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[90vh] overflow-y-auto custom-scrollbar space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">تعديل ساعات وأوقات الشيفت</h3>
+          <p class="text-xs text-brand-600 font-semibold">تحكم في بداية ونهاية الشيفت وفواصل المواعيد دون قيود</p>
+        </div>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form id="form-shift-settings" class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">مسمى الشيفت</label>
+          <input type="text" id="input-shift-title" required value="شيفت الجمعة" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+        </div>
+
+        <div class="grid grid-cols-2 gap-2">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">بداية الشيفت (Start Time) *</label>
+            <input type="time" id="input-shift-start" required value="16:00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">نهاية الشيفت (End Time) *</label>
+            <input type="time" id="input-shift-end" required value="22:00" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm font-mono focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">مدة كل ميعاد / الفاصل الزمني</label>
+          <select id="input-shift-interval" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500">
+            <option value="15">15 دقيقة</option>
+            <option value="20">20 دقيقة</option>
+            <option value="30" selected>30 دقيقة</option>
+            <option value="45">45 دقيقة</option>
+            <option value="60">60 دقيقة (ساعة كاملة)</option>
+          </select>
+        </div>
+
+        <div class="p-3 bg-brand-50 rounded-xl border border-brand-200 text-xs space-y-1">
+          <span class="font-bold text-brand-900 block">معاينة نطاق الشيفت الجديد:</span>
+          <p id="preview-shift-range" class="font-bold text-brand-700">من 04:00 مساءً إلى 10:00 مساءً (كل 30 دقيقة)</p>
+        </div>
+
+        <div class="pt-2">
+          <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm py-2.5 rounded-xl shadow-md shadow-brand-500/20 transition">
+            حفظ إعدادات الشيفت وتحديث المواعيد
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 9: Manage & Edit Ortho Options (Procedures, Wire Sizes, Wire Types) -->
+  <div id="modal-manage-ortho-options" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[60] hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition">
+    <div class="bg-white w-full max-w-md rounded-t-3xl sm:rounded-2xl p-5 shadow-2xl max-h-[88vh] flex flex-col space-y-3">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="text-base font-bold text-slate-900">تعديل وإدارة قوائم الاختيارات</h3>
+          <p class="text-xs text-brand-600 font-semibold">تعديل مسمى أي خيار موجود أو حذفه أو إضافة خيارات جديدة</p>
+        </div>
+        <button class="btn-close-modal text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Category Tabs -->
+      <div class="grid grid-cols-3 gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-bold">
+        <button type="button" class="tab-manage-cat active py-2 rounded-lg bg-white text-brand-700 shadow-sm transition" data-cat="procedures">إجراء الجلسة</button>
+        <button type="button" class="tab-manage-cat py-2 rounded-lg text-slate-600 hover:text-slate-800 transition" data-cat="wires">مقاس الواير</button>
+        <button type="button" class="tab-manage-cat py-2 rounded-lg text-slate-600 hover:text-slate-800 transition" data-cat="wireTypes">نوع الواير</button>
+      </div>
+
+      <!-- Add New Option to Active Category -->
+      <div class="flex items-center gap-1.5 bg-brand-50/70 p-2 rounded-xl border border-brand-200">
+        <input type="text" id="input-manage-new-option" placeholder="أضف خياراً جديداً لهذه القائمة..." class="flex-1 bg-white border border-brand-200 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-brand-500">
+        <button type="button" id="btn-manage-add-option" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition">+ إضافة</button>
+      </div>
+
+      <!-- Editable Options List -->
+      <div id="manage-options-list-container" class="flex-1 overflow-y-auto custom-scrollbar space-y-2 pr-0.5 max-h-[45vh]">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+        <button type="button" id="btn-reset-default-options" class="text-[11px] font-bold text-slate-400 hover:text-slate-600 underline">
+          استعادة القائمة الافتراضية
+        </button>
+        <button type="button" class="btn-close-modal bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold px-5 py-2 rounded-xl transition">
+          إغلاق وحفظ
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed top-4 inset-x-4 max-w-sm mx-auto z-50 pointer-events-none space-y-2"></div>
+
+  <!-- JavaScript Logic -->
+  <script>
+    // Initial Seed Data taken exactly from the Doctor's Clinic screenshot!
+    const INITIAL_PATIENTS = [
+      {
+        id: "p1",
+        name: "إبراهيم فؤاد",
+        phone: "01098765432",
+        medicalAlert: "لا توجد موانع طبية",
+        treatmentPlan: "تقويم أسنان - مطاط إغلاق المسافات",
+        totalCost: 15000,
+        paidCost: 9000,
+        upcomingSession: {
+          date: "2026-11-20",
+          time: "05:00 PM",
+          procedure: "Follow up",
+          notes: "متابعة الـ Elastics ومقاس الإطباق",
+          status: "Scheduled"
+        },
+        pastSessions: [
+          {
+            id: "s1_1",
+            date: "2026-10-02",
+            time: "05:00 PM",
+            procedure: "Elastics 3/16 . 2.5 oz",
+            notes: "تم تسليم المريض مطاط 3/16 والتأكيد على ارتدائه 24 ساعة",
+            payment: 500
+          }
+        ]
+      },
+      {
+        id: "p2",
+        name: "صفاء محمود",
+        phone: "01123456789",
+        medicalAlert: "حساسية بنسلين",
+        treatmentPlan: "تقويم ثابت - فك علوي وسفلي",
+        totalCost: 16000,
+        paidCost: 8500,
+        upcomingSession: {
+          date: "2026-10-23",
+          time: "04:30 PM → 05:30 PM",
+          procedure: "Bonding Molars",
+          wire: "0.016 Upper",
+          wireType: "NiTi (نيكل تيتانيوم)",
+          notes: "تركيب التيوب على الضروس السفلية",
+          status: "Scheduled"
+        },
+        pastSessions: [
+          {
+            id: "s2_1",
+            date: "2026-09-25",
+            time: "04:30 PM",
+            procedure: "Follow up",
+            notes: "تغيير الواير إلى 16 NiTi",
+            payment: 400
+          }
+        ]
+      },
+      {
+        id: "p3",
+        name: "عبد الرحمن علي",
+        phone: "01234567890",
+        medicalAlert: "لا توجد موانع طبية",
+        treatmentPlan: "تقويم أسنان وقائي",
+        totalCost: 14000,
+        paidCost: 7000,
+        upcomingSession: {
+          date: "2026-11-06",
+          time: "06:00 PM → 07:00 PM",
+          procedure: "Follow up",
+          notes: "فحص حركة الأنياب",
+          status: "Scheduled"
+        },
+        pastSessions: [
+          {
+            id: "s3_1",
+            date: "2026-10-09",
+            time: "06:00 PM",
+            procedure: "Follow up",
+            notes: "تعديل الشد والمتابعة الدورية",
+            payment: 500
+          }
+        ]
+      },
+      {
+        id: "p4",
+        name: "مروة كمال",
+        phone: "01011223344",
+        medicalAlert: "لا توجد موانع طبية",
+        treatmentPlan: "جهاز توسيع فك علوي TPA + تقويم",
+        totalCost: 18000,
+        paidCost: 10000,
+        upcomingSession: {
+          date: "2026-10-23",
+          time: "06:00 PM → 07:30 PM",
+          procedure: "TPA Insertion + Bonding",
+          wire: "0.014 Upper",
+          wireType: "Heat-Activated NiTi",
+          notes: "تثبيت جهاز TPA والبدء في تركيب البريكتس",
+          status: "Scheduled"
+        },
+        pastSessions: [
+          {
+            id: "s4_1",
+            date: "2026-10-09",
+            time: "06:00 PM",
+            procedure: "Impression for TPA",
+            notes: "أخذ مقاس ألجينات مع باندات وإرساله لمعمل دكتور جلهوم",
+            payment: 1000
+          }
+        ]
+      },
+      {
+        id: "p5",
+        name: "أحمد سمير",
+        phone: "01555667788",
+        medicalAlert: "ضغط مرتفع",
+        treatmentPlan: "تقويم كامل للحفاظ على مسافات الضروس",
+        totalCost: 17000,
+        paidCost: 11000,
+        upcomingSession: {
+          date: "2026-10-23",
+          time: "04:00 PM → 04:30 PM",
+          procedure: "Follow up 18 U - 16L",
+          wire: "18 U - 16L",
+          wireType: "Stainless Steel (SS)",
+          notes: "متابعة المقاسات وواير 18 علوي و16 سفلي",
+          status: "Scheduled"
+        },
+        pastSessions: [
+          {
+            id: "s5_1",
+            date: "2026-09-25",
+            time: "04:00 PM",
+            procedure: "Bonding Molars",
+            notes: "تثبيت حلقات الضروس الخلفية بنجاح",
+            payment: 600
+          }
+        ]
+      },
+      {
+        id: "p6",
+        name: "نيرة حسن",
+        phone: "01099887766",
+        medicalAlert: "لا توجد موانع طبية",
+        treatmentPlan: "تقويم وظيفي فك سفلي Twinblock",
+        totalCost: 19000,
+        paidCost: 9000,
+        upcomingSession: {
+          date: "2026-10-30",
+          time: "05:00 PM",
+          procedure: "Insertion & photography",
+          notes: "تسليم جهاز التوين بلوك وتصوير الحالة سريرياً",
+          status: "Scheduled"
+        },
+        pastSessions: [
+          {
+            id: "s6_1",
+            date: "2026-10-16",
+            time: "05:00 PM",
+            procedure: "Impression for twinblock",
+            notes: "أخذ عضة تشريحية ومقاس تفصيلي",
+            payment: 1500
+          }
+        ]
+      },
+      {
+        id: "p7",
+        name: "يوسف طارق",
+        phone: "01200112233",
+        medicalAlert: "لا توجد موانع طبية",
+        treatmentPlan: "تقويم جراحي بعد عملية الفك",
+        totalCost: 22000,
+        paidCost: 14000,
+        upcomingSession: {
+          date: "2026-11-13",
+          time: "03:00 PM",
+          procedure: "Bonding Lower",
+          notes: "تثبيت الفك السفلي والمتابعة الجراحية",
+          status: "Scheduled"
+        },
+        pastSessions: [
+          {
+            id: "s7_1",
+            date: "2026-10-16",
+            time: "03:00 PM",
+            procedure: "Follow up on Surgery",
+            notes: "فحص التئام العظم والجيوب بعد الجراحة",
+            payment: 800
+          }
+        ]
+      }
+    ];
+
+    // App State
+    let patients = [];
+    let selectedDate = "2026-10-23"; // Default upcoming Friday in doctor's screenshot!
+    let activePatientId = null;
+
+    // Shift Settings (Customizable Hours & Intervals - No Restrictions!)
+    const DEFAULT_SHIFT = {
+      title: "شيفت الجمعة",
+      startTime: "16:00", // 4:00 PM
+      endTime: "22:00",   // 10:00 PM
+      interval: 30        // 30 minutes
+    };
+    let shiftSettings = { ...DEFAULT_SHIFT };
+
+    // Customizable Ortho Options (Procedures, Wire Sizes, Wire Types)
+    const DEFAULT_CUSTOM_OPTIONS = {
+      procedures: [
+        "Follow up",
+        "Bonding Upper",
+        "Bonding Lower",
+        "Bonding Molars",
+        "Impression for TPA",
+        "TPA Insertion + Bonding",
+        "Follow up 18 U - 16L",
+        "Follow up on Surgery",
+        "Elastics 3/16 . 2.5 oz",
+        "Impression for twinblock",
+        "Insertion & photography",
+        "Power Chain Change",
+        "Open Coil Spring",
+        "Separators Placement",
+        "Stripping (IPR)",
+        "Debonding & Retainer",
+        "Scaling & Polishing"
+      ],
+      wires: [
+        "بدون تغيير",
+        "0.012 Upper",
+        "0.012 Lower",
+        "0.014 Upper",
+        "0.014 Lower",
+        "0.016 Upper",
+        "0.016 Lower",
+        "0.018 Upper",
+        "0.018 Lower",
+        "18 U - 16L",
+        "16x22 Upper",
+        "16x22 Lower",
+        "16x22 U & L",
+        "17x25 Upper",
+        "17x25 Lower",
+        "19x25 Upper",
+        "19x25 Lower"
+      ],
+      wireTypes: [
+        "بدون",
+        "NiTi (نيكل تيتانيوم)",
+        "Heat-Activated NiTi",
+        "CuNiTi (نحاس نيكل تيتانيوم)",
+        "Stainless Steel (SS)",
+        "TMA (Beta Titanium)",
+        "Reverse Curve NiTi",
+        "Coaxial / Braided"
+      ]
+    };
+    let customOptions = JSON.parse(JSON.stringify(DEFAULT_CUSTOM_OPTIONS));
+
+    // Load State from LocalStorage
+    function loadData() {
+      try {
+        const stored = localStorage.getItem("dr_galhom_patients_db");
+        if (stored) {
+          patients = JSON.parse(stored);
+        } else {
+          patients = INITIAL_PATIENTS;
+          saveData();
+        }
+
+        const storedShift = localStorage.getItem("dr_galhom_shift_settings");
+        if (storedShift) {
+          shiftSettings = JSON.parse(storedShift);
+        }
+
+        const storedOpts = localStorage.getItem("dr_galhom_custom_options");
+        if (storedOpts) {
+          const parsed = JSON.parse(storedOpts);
+          customOptions = {
+            procedures: parsed.procedures || DEFAULT_CUSTOM_OPTIONS.procedures,
+            wires: parsed.wires || DEFAULT_CUSTOM_OPTIONS.wires,
+            wireTypes: parsed.wireTypes || DEFAULT_CUSTOM_OPTIONS.wireTypes
+          };
+        }
+      } catch (e) {
+        patients = INITIAL_PATIENTS;
+        shiftSettings = { ...DEFAULT_SHIFT };
+        customOptions = JSON.parse(JSON.stringify(DEFAULT_CUSTOM_OPTIONS));
+      }
+    }
+
+    let activeManageCategory = "procedures";
+
+    function saveCustomOptions() {
+      try {
+        localStorage.setItem("dr_galhom_custom_options", JSON.stringify(customOptions));
+      } catch (e) {
+        console.error("Custom options save error", e);
+      }
+    }
+
+    function refreshAllOrthoSelectsPreservingValues() {
+      const getVal = (id) => {
+        const el = document.getElementById(id);
+        return el ? el.value : "";
+      };
+      populateOrthoDropdowns(
+        getVal("input-session-procedure"),
+        getVal("input-session-wire"),
+        getVal("input-session-wire-type"),
+        getVal("input-complete-procedure"),
+        getVal("input-complete-wire"),
+        getVal("input-complete-wire-type")
+      );
+    }
+
+    function openManageOptionsModal(category = "procedures") {
+      activeManageCategory = category;
+      document.querySelectorAll(".tab-manage-cat").forEach(tab => {
+        if (tab.dataset.cat === category) {
+          tab.classList.add("active", "bg-white", "text-brand-700", "shadow-sm");
+          tab.classList.remove("text-slate-600");
+        } else {
+          tab.classList.remove("active", "bg-white", "text-brand-700", "shadow-sm");
+          tab.classList.add("text-slate-600");
+        }
+      });
+      renderManageOptionsList();
+      openModal("modal-manage-ortho-options");
+    }
+
+    function renderManageOptionsList() {
+      const container = document.getElementById("manage-options-list-container");
+      if (!container) return;
+      container.innerHTML = "";
+
+      const list = customOptions[activeManageCategory] || [];
+      if (list.length === 0) {
+        container.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">القائمة فارغة حالياً، أضف خياراً جديداً بالأعلى.</p>`;
+        return;
+      }
+
+      list.forEach((optVal, index) => {
+        const row = document.createElement("div");
+        row.className = "flex items-center gap-1.5 bg-slate-50 p-2 rounded-xl border border-slate-200";
+        row.innerHTML = `
+          <span class="text-[10px] font-mono text-slate-400 w-5 text-center">${index + 1}</span>
+          <input type="text" class="input-edit-opt-row flex-1 bg-white border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-brand-500" value="${optVal.replace(/"/g, '&quot;')}">
+          <button type="button" class="btn-save-opt-row bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition">حفظ</button>
+          <button type="button" class="btn-delete-opt-row bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 text-[11px] font-bold px-2 py-1.5 rounded-lg transition" title="حذف الخيار">حذف</button>
+        `;
+
+        const inputEl = row.querySelector(".input-edit-opt-row");
+        const saveBtn = row.querySelector(".btn-save-opt-row");
+        const delBtn = row.querySelector(".btn-delete-opt-row");
+
+        const saveEdit = () => {
+          const newVal = inputEl.value.trim();
+          if (!newVal) {
+            showToast("لا يمكن ترك اسم الخيار فارغاً", "error");
+            return;
+          }
+          const oldVal = customOptions[activeManageCategory][index];
+          customOptions[activeManageCategory][index] = newVal;
+
+          // Also update existing patient records that had oldVal so everything stays synced!
+          patients.forEach(p => {
+            if (p.upcomingSession) {
+              if (activeManageCategory === "procedures" && p.upcomingSession.procedure === oldVal) p.upcomingSession.procedure = newVal;
+              if (activeManageCategory === "wires" && p.upcomingSession.wire === oldVal) p.upcomingSession.wire = newVal;
+              if (activeManageCategory === "wireTypes" && p.upcomingSession.wireType === oldVal) p.upcomingSession.wireType = newVal;
+            }
+            if (p.pastSessions) {
+              p.pastSessions.forEach(ps => {
+                if (activeManageCategory === "procedures" && ps.procedure === oldVal) ps.procedure = newVal;
+                if (activeManageCategory === "wires" && ps.wire === oldVal) ps.wire = newVal;
+                if (activeManageCategory === "wireTypes" && ps.wireType === oldVal) ps.wireType = newVal;
+              });
+            }
+          });
+
+          saveCustomOptions();
+          saveData();
+          refreshAllOrthoSelectsPreservingValues();
+          renderManageOptionsList();
+          renderCalendarView();
+          if (activePatientId && !document.getElementById("view-patient-detail").classList.contains("hidden")) {
+            openPatientProfile(activePatientId);
+          }
+          showToast(`تم تعديل "${oldVal}" إلى "${newVal}"`);
+        };
+
+        saveBtn.addEventListener("click", saveEdit);
+        inputEl.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            saveEdit();
+          }
+        });
+
+        delBtn.addEventListener("click", () => {
+          const removed = customOptions[activeManageCategory][index];
+          customOptions[activeManageCategory].splice(index, 1);
+          saveCustomOptions();
+          refreshAllOrthoSelectsPreservingValues();
+          renderManageOptionsList();
+          showToast(`تم حذف "${removed}" من القائمة`);
+        });
+
+        container.appendChild(row);
+      });
+    }
+
+    function populatePatientSelector(selectedId = "") {
+      const sel = document.getElementById("select-session-patient");
+      if (!sel) return;
+      sel.innerHTML = "";
+      patients.forEach(p => {
+        const opt = document.createElement("option");
+        opt.value = p.id;
+        opt.textContent = `${p.name} ${p.phone ? "(" + p.phone + ")" : ""}`;
+        if (selectedId && p.id === selectedId) {
+          opt.selected = true;
+        }
+        sel.appendChild(opt);
+      });
+    }
+
+    function populateOrthoDropdowns(schedProc = "", schedWire = "", schedWireType = "", compProc = "", compWire = "", compWireType = "") {
+      const fillSelect = (id, list, selectedVal, allowEmpty = false) => {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.innerHTML = "";
+        if (allowEmpty) {
+          const emptyOpt = document.createElement("option");
+          emptyOpt.value = "";
+          emptyOpt.textContent = "-- بدون حجز قادم --";
+          el.appendChild(emptyOpt);
+        }
+        // Ensure selectedVal is in list if non-empty
+        const items = [...list];
+        if (selectedVal && !items.includes(selectedVal)) {
+          items.unshift(selectedVal);
+        }
+        items.forEach(item => {
+          const opt = document.createElement("option");
+          opt.value = item;
+          opt.textContent = item;
+          if (selectedVal && item === selectedVal) {
+            opt.selected = true;
+          }
+          el.appendChild(opt);
+        });
+      };
+
+      fillSelect("input-session-procedure", customOptions.procedures, schedProc || customOptions.procedures[0]);
+      fillSelect("input-session-wire", customOptions.wires, schedWire || customOptions.wires[0]);
+      fillSelect("input-session-wire-type", customOptions.wireTypes, schedWireType || customOptions.wireTypes[0]);
+
+      fillSelect("input-complete-procedure", customOptions.procedures, compProc || customOptions.procedures[0]);
+      fillSelect("input-complete-wire", customOptions.wires, compWire || customOptions.wires[0]);
+      fillSelect("input-complete-wire-type", customOptions.wireTypes, compWireType || customOptions.wireTypes[0]);
+      fillSelect("input-next-after-complete-procedure", customOptions.procedures, "Follow up", true);
+
+      const pastProcEl = document.getElementById("input-past-session-procedure");
+      const pastWireEl = document.getElementById("input-past-session-wire");
+      const pastTypeEl = document.getElementById("input-past-session-wire-type");
+      fillSelect("input-past-session-procedure", customOptions.procedures, pastProcEl && pastProcEl.value ? pastProcEl.value : customOptions.procedures[0]);
+      fillSelect("input-past-session-wire", customOptions.wires, pastWireEl && pastWireEl.value ? pastWireEl.value : customOptions.wires[0]);
+      fillSelect("input-past-session-wire-type", customOptions.wireTypes, pastTypeEl && pastTypeEl.value ? pastTypeEl.value : customOptions.wireTypes[0]);
+    }
+
+    // Ensure every patient has a structured `payments` array with dates
+    function ensurePatientPayments(p) {
+      if (!p.payments || !Array.isArray(p.payments)) {
+        p.payments = [];
+        let sessionPaySum = 0;
+        if (p.pastSessions && Array.isArray(p.pastSessions)) {
+          p.pastSessions.forEach(ps => {
+            if (ps.payment && ps.payment > 0) {
+              sessionPaySum += ps.payment;
+              p.payments.push({
+                id: "pay_" + ps.id,
+                amount: ps.payment,
+                date: ps.date || "2026-10-01",
+                note: `دفعة جلسة (${ps.procedure})`
+              });
+            }
+          });
+        }
+        const diff = (p.paidCost || 0) - sessionPaySum;
+        if (diff > 0) {
+          p.payments.push({
+            id: "pay_init_" + p.id,
+            amount: diff,
+            date: "2026-09-01",
+            note: "دفعة مقدم / تعاقد سابق"
+          });
+        }
+      }
+    }
+
+    function recalcPatientPaid(p) {
+      ensurePatientPayments(p);
+      p.paidCost = p.payments.reduce((acc, item) => acc + (parseFloat(item.amount) || 0), 0);
+    }
+
+    function saveData() {
+      try {
+        localStorage.setItem("dr_galhom_patients_db", JSON.stringify(patients));
+      } catch (e) {
+        console.error("LocalStorage save error", e);
+      }
+    }
+
+    function saveShiftSettings() {
+      try {
+        localStorage.setItem("dr_galhom_shift_settings", JSON.stringify(shiftSettings));
+      } catch (e) {
+        console.error("Shift settings save error", e);
+      }
+    }
+
+    // Time Formatting Helpers
+    function formatTime24to12(time24) {
+      if (!time24) return "";
+      const [hStr, mStr] = time24.split(":");
+      let h = parseInt(hStr, 10);
+      const m = mStr || "00";
+      const ampm = h >= 12 ? "PM" : "AM";
+      const h12 = h % 12 || 12;
+      const padH = h12 < 10 ? "0" + h12 : h12;
+      return `${padH}:${m} ${ampm}`;
+    }
+
+    function formatTimeArabic(time24) {
+      if (!time24) return "";
+      const [hStr, mStr] = time24.split(":");
+      let h = parseInt(hStr, 10);
+      const m = mStr || "00";
+      const period = h >= 12 ? "م" : "ص";
+      const h12 = h % 12 || 12;
+      return `${h12}:${m} ${period}`;
+    }
+
+    // Generate dynamic slots between any Start Time and End Time
+    function generateDynamicTimeSlots() {
+      const slots = [];
+      const [startH, startM] = shiftSettings.startTime.split(":").map(Number);
+      const [endH, endM] = shiftSettings.endTime.split(":").map(Number);
+      const step = parseInt(shiftSettings.interval, 10) || 30;
+
+      let currentMin = startH * 60 + startM;
+      const endTotalMin = endH * 60 + endM;
+
+      while (currentMin <= endTotalMin) {
+        const h = Math.floor(currentMin / 60);
+        const m = currentMin % 60;
+        const time24 = `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+        slots.push({
+          time12: formatTime24to12(time24),
+          label: `${formatTimeArabic(time24)} (${formatTime24to12(time24)})`
+        });
+        currentMin += step;
+      }
+      return slots;
+    }
+
+    function updateShiftDisplayLabels() {
+      const startAr = formatTimeArabic(shiftSettings.startTime);
+      const endAr = formatTimeArabic(shiftSettings.endTime);
+      const labelText = `${shiftSettings.title} (${startAr} - ${endAr})`;
+      
+      const headerLabel = document.getElementById("label-header-shift-hours");
+      if (headerLabel) headerLabel.textContent = labelText;
+
+      const subLabel = document.getElementById("label-shift-range-subtitle");
+      if (subLabel) subLabel.textContent = `من ${startAr} إلى ${endAr}`;
+
+      const modalInfo = document.getElementById("label-modal-shift-info");
+      if (modalInfo) modalInfo.textContent = `${startAr} - ${endAr}`;
+    }
+
+    function populateSessionTimeSelect(currentVal = "") {
+      const select = document.getElementById("input-session-time");
+      if (!select) return;
+      select.innerHTML = "";
+
+      const slots = generateDynamicTimeSlots();
+      let hasCurrent = false;
+
+      slots.forEach(s => {
+        const opt = document.createElement("option");
+        opt.value = s.time12;
+        opt.textContent = s.label;
+        if (currentVal && s.time12.toLowerCase() === currentVal.toLowerCase()) {
+          opt.selected = true;
+          hasCurrent = true;
+        }
+        select.appendChild(opt);
+      });
+
+      // Custom time option
+      const customOpt = document.createElement("option");
+      customOpt.value = "custom";
+      customOpt.textContent = "✏️ وقت مخصص خارج الشيفت (حر يدوي)";
+      if (currentVal && !hasCurrent) {
+        customOpt.selected = true;
+        document.getElementById("container-custom-time").classList.remove("hidden");
+        document.getElementById("input-session-custom-time").value = currentVal;
+      } else {
+        document.getElementById("container-custom-time").classList.add("hidden");
+        document.getElementById("input-session-custom-time").value = "";
+      }
+      select.appendChild(customOpt);
+    }
+
+    // 1-Click WhatsApp Reminder
+    function sendWhatsAppReminder(phone, patientName, date, time, procedure) {
+      if (!phone) {
+        showToast("المريض ليس لديه رقم هاتف مسجل", "error");
+        return;
+      }
+      let cleanPhone = phone.replace(/\D/g, "");
+      if (cleanPhone.startsWith("0")) {
+        cleanPhone = "2" + cleanPhone; // Egypt country code
+      }
+      const msg = `أهلاً بحضرتك يا ${patientName}، بنفكرك بميعاد جلستك في عيادة دكتور جلهوم يوم ${date} في تمام الساعة ${time} لإجراء: (${procedure}). يسعدنا تشريفك!`;
+      const url = `https://api.whatsapp.com/send?phone=${cleanPhone}&text=${encodeURIComponent(msg)}`;
+      window.open(url, "_blank");
+    }
+
+    // Helper: Toast
+    function showToast(msg, type = "success") {
+      const container = document.getElementById("toast-container");
+      const el = document.createElement("div");
+      el.className = `p-3 rounded-xl shadow-lg border text-xs font-bold flex items-center justify-between pointer-events-auto transition-all duration-300 transform translate-y-2 opacity-0 ${
+        type === "success" ? "bg-emerald-600 text-white border-emerald-700" : "bg-slate-800 text-white border-slate-700"
+      }`;
+      el.innerHTML = `<span>${msg}</span><span class="text-xs opacity-75">✕</span>`;
+      container.appendChild(el);
+      setTimeout(() => {
+        el.classList.remove("translate-y-2", "opacity-0");
+      }, 10);
+      setTimeout(() => {
+        el.classList.add("opacity-0", "-translate-y-2");
+        setTimeout(() => el.remove(), 300);
+      }, 3000);
+    }
+
+    // Tab Navigation
+    function switchTab(viewId) {
+      document.querySelectorAll("main > section").forEach(sec => sec.classList.add("hidden"));
+      const targetSec = document.getElementById(viewId);
+      if (targetSec) targetSec.classList.remove("hidden");
+
+      document.querySelectorAll(".nav-tab").forEach(btn => {
+        if (btn.dataset.target === viewId) {
+          btn.classList.add("text-brand-600");
+          btn.classList.remove("text-slate-400");
+        } else {
+          btn.classList.remove("text-brand-600");
+          btn.classList.add("text-slate-400");
+        }
+      });
+
+      if (viewId === "view-calendar") renderCalendarView();
+      if (viewId === "view-patients") renderPatientsDirectory();
+      if (viewId === "view-finances") renderFinances();
+    }
+
+    // Render Friday Chips for Easy Navigation
+    function renderFridayChips() {
+      const container = document.getElementById("friday-chips-container");
+      container.innerHTML = "";
+      
+      const fridays = [
+        { date: "2026-10-16", label: "16 أكتوبر (اليوم)" },
+        { date: "2026-10-23", label: "23 أكتوبر (القادم)" },
+        { date: "2026-10-30", label: "30 أكتوبر" },
+        { date: "2026-11-06", label: "6 نوفمبر" },
+        { date: "2026-11-13", label: "13 نوفمبر" },
+        { date: "2026-11-20", label: "20 نوفمبر" },
+      ];
+
+      fridays.forEach(f => {
+        const btn = document.createElement("button");
+        const isSel = f.date === selectedDate;
+        btn.className = `px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition border ${
+          isSel ? "bg-brand-600 text-white border-brand-600 shadow-sm" : "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100"
+        }`;
+        btn.textContent = f.label;
+        btn.addEventListener("click", () => {
+          selectedDate = f.date;
+          document.getElementById("label-selected-date").textContent = f.label;
+          renderFridayChips();
+          renderCalendarView();
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    // Render Calendar View for Selected Date
+    function renderCalendarView() {
+      const listContainer = document.getElementById("day-appointments-list");
+      listContainer.innerHTML = "";
+
+      // Find all upcoming sessions on this date
+      const matched = [];
+      patients.forEach(p => {
+        if (p.upcomingSession && p.upcomingSession.date === selectedDate) {
+          matched.push({ patient: p, session: p.upcomingSession, isPast: false });
+        }
+        // Also check if any past session was completed on this date
+        p.pastSessions.forEach(ps => {
+          if (ps.date === selectedDate) {
+            matched.push({ patient: p, session: ps, isPast: true });
+          }
+        });
+      });
+
+      // Sort by time
+      matched.sort((a, b) => a.session.time.localeCompare(b.session.time));
+
+      // Stats
+      document.getElementById("stat-day-total").textContent = matched.length;
+      document.getElementById("stat-day-completed").textContent = matched.filter(m => m.isPast).length;
+      document.getElementById("stat-day-pending").textContent = matched.filter(m => !m.isPast).length;
+
+      if (matched.length === 0) {
+        listContainer.innerHTML = `
+          <div class="bg-white rounded-2xl p-6 border border-slate-200 text-center text-slate-400 space-y-2">
+            <svg class="w-8 h-8 mx-auto text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+            </svg>
+            <p class="text-xs font-semibold">لا توجد حالات مجدولة لهذا اليوم حتى الآن</p>
+            <button class="btn-schedule-for-date text-xs font-bold text-brand-600 bg-brand-50 px-3 py-1.5 rounded-lg border border-brand-200">
+              + إضافة مريض لهذا الشيفت
+            </button>
+          </div>
+        `;
+        const addBtn = listContainer.querySelector(".btn-schedule-for-date");
+        if (addBtn) {
+          addBtn.addEventListener("click", () => {
+            openScheduleModalFromCalendar();
+          });
+        }
+        return;
+      }
+
+      matched.forEach(item => {
+        const p = item.patient;
+        const s = item.session;
+        const isPast = item.isPast;
+
+        const card = document.createElement("div");
+        card.className = `p-3.5 rounded-2xl border transition shadow-sm ${
+          isPast ? "bg-slate-50 border-slate-200 opacity-80" : "bg-white border-slate-200 hover:border-brand-400"
+        }`;
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-black font-mono px-2 py-0.5 rounded-md ${isPast ? "bg-slate-200 text-slate-600" : "bg-brand-50 text-brand-700 border border-brand-200"}">
+                ${s.time}
+              </span>
+              <h3 class="text-sm font-black text-slate-900">${p.name}</h3>
+            </div>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${
+              isPast ? "bg-emerald-100 text-emerald-800" : "bg-amber-100 text-amber-800"
+            }">
+              ${isPast ? "تمت الجلسة" : "في الانتظار"}
+            </span>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-600 mb-1.5">
+            <span class="font-bold text-brand-800">${s.procedure}</span>
+            <span class="text-slate-400 font-mono" dir="ltr">${p.phone || ""}</span>
+          </div>
+          ${(s.wire && s.wire !== "بدون تغيير") || (s.wireType && s.wireType !== "بدون") ? `
+            <div class="flex flex-wrap items-center gap-1.5 mb-2">
+              ${s.wire && s.wire !== "بدون تغيير" ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-teal-50 text-teal-800 border border-teal-200">الواير: ${s.wire}</span>` : ""}
+              ${s.wireType && s.wireType !== "بدون" ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded-md bg-indigo-50 text-indigo-800 border border-indigo-200">النوع: ${s.wireType}</span>` : ""}
+            </div>
+          ` : ""}
+
+          ${s.notes ? `<p class="text-[11px] text-slate-500 bg-white/60 p-2 rounded-lg border border-slate-100 mb-2">${s.notes}</p>` : ""}
+
+          <div class="flex items-center justify-end gap-2 pt-1 border-t border-slate-100">
+            ${p.phone ? `
+              <button class="btn-card-whatsapp bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold px-2.5 py-1.5 rounded-xl transition flex items-center gap-1" data-id="${p.id}" title="تذكير المريض عبر واتساب">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.598 2.664-.698c.969.588 1.961.947 3.218.947 3.178 0 5.767-2.587 5.767-5.766.001-3.187-2.575-5.77-6.189-5.77zm0-2.172c4.418 0 8 3.582 8 8 0 4.418-3.582 8-8 8-1.42 0-2.75-.373-3.905-1.026l-5.095 1.334 1.357-4.96c-.722-1.203-1.157-2.617-1.157-4.148 0-4.418 3.582-8 8-8z"/></svg>
+                واتساب
+              </button>
+            ` : ""}
+            ${!isPast ? `
+              <button class="btn-card-edit-time bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-200 text-xs font-bold px-2.5 py-1.5 rounded-xl transition" data-id="${p.id}">
+                تعديل الموعد
+              </button>
+              <button class="btn-card-complete bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1 active:scale-95" data-id="${p.id}">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                </svg>
+                إتمام الجلسة
+              </button>
+            ` : ""}
+            <button class="btn-card-open-profile bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3 py-1.5 rounded-xl transition" data-id="${p.id}">
+              فتح الملف
+            </button>
+          </div>
+        `;
+
+        const openBtn = card.querySelector(".btn-card-open-profile");
+        openBtn.addEventListener("click", () => openPatientProfile(p.id));
+
+        const compBtn = card.querySelector(".btn-card-complete");
+        if (compBtn) {
+          compBtn.addEventListener("click", () => openCompleteModal(p.id));
+        }
+
+        const waBtn = card.querySelector(".btn-card-whatsapp");
+        if (waBtn) {
+          waBtn.addEventListener("click", () => sendWhatsAppReminder(p.phone, p.name, s.date, s.time, s.procedure));
+        }
+
+        const editTimeBtn = card.querySelector(".btn-card-edit-time");
+        if (editTimeBtn) {
+          editTimeBtn.addEventListener("click", () => {
+            activePatientId = p.id;
+            document.getElementById("input-session-patient-id").value = p.id;
+            populatePatientSelector(p.id);
+            document.getElementById("input-session-date").value = s.date;
+            populateOrthoDropdowns(s.procedure, s.wire || "", s.wireType || "");
+            document.getElementById("input-session-notes").value = s.notes || "";
+            populateSessionTimeSelect(s.time);
+            openModal("modal-schedule-session");
+          });
+        }
+
+        listContainer.appendChild(card);
+      });
+    }
+
+    // Render Patients Directory
+    function renderPatientsDirectory(query = "", filter = "all") {
+      const container = document.getElementById("patients-directory-list");
+      container.innerHTML = "";
+
+      let filtered = patients.filter(p => {
+        const matchesQuery = !query || 
+          p.name.toLowerCase().includes(query.toLowerCase()) || 
+          p.phone.includes(query) ||
+          (p.treatmentPlan && p.treatmentPlan.toLowerCase().includes(query.toLowerCase()));
+        
+        if (!matchesQuery) return false;
+
+        if (filter === "has-upcoming") return !!p.upcomingSession;
+        if (filter === "has-balance") return (p.totalCost - p.paidCost) > 0;
+        if (filter === "overdue") {
+          const today = new Date().toISOString().split("T")[0];
+          return p.upcomingSession && p.upcomingSession.date < today;
+        }
+        return true;
+      });
+
+      document.getElementById("count-all-patients").textContent = patients.length;
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="bg-white rounded-2xl p-6 text-center text-slate-400 border border-slate-200">
+            <p class="text-xs font-semibold">لم يتم العثور على مرضى مطابقين للبحث</p>
+          </div>
+        `;
+        return;
+      }
+
+      filtered.forEach(p => {
+        const balance = p.totalCost - p.paidCost;
+        const lastSession = p.pastSessions && p.pastSessions.length > 0 ? p.pastSessions[0] : null;
+
+        const card = document.createElement("div");
+        card.className = "bg-white p-3.5 rounded-2xl border border-slate-200 hover:border-brand-300 shadow-sm transition cursor-pointer";
+        card.innerHTML = `
+          <div class="flex items-start justify-between mb-1.5">
+            <div class="flex items-center gap-2">
+              <div class="w-8 h-8 rounded-full bg-brand-50 text-brand-700 font-bold text-xs flex items-center justify-center border border-brand-200">
+                ${p.name.charAt(0)}
+              </div>
+              <div>
+                <h3 class="text-sm font-bold text-slate-900">${p.name}</h3>
+                <span class="text-[11px] text-slate-400 font-mono" dir="ltr">${p.phone || ""}</span>
+              </div>
+            </div>
+            ${balance > 0 ? `
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+                متبقي: ${balance} ج.م
+              </span>
+            ` : `
+              <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700">
+                خالص
+              </span>
+            `}
+          </div>
+
+          <div class="space-y-1 text-xs pt-1 border-t border-slate-100">
+            ${p.upcomingSession ? `
+              <div class="flex items-center justify-between text-brand-700 font-medium">
+                <span class="text-slate-400 text-[11px]">الموعد القادم:</span>
+                <span>${p.upcomingSession.date} (${p.upcomingSession.procedure})</span>
+              </div>
+            ` : `
+              <div class="flex items-center justify-between text-slate-400 text-[11px]">
+                <span>الموعد القادم:</span>
+                <span class="text-slate-500 font-bold">غير محدد</span>
+              </div>
+            `}
+            ${lastSession ? `
+              <div class="flex items-center justify-between text-slate-500 text-[11px]">
+                <span class="text-slate-400">آخر إجراء:</span>
+                <span>${lastSession.date} - ${lastSession.procedure}</span>
+              </div>
+            ` : ""}
+          </div>
+        `;
+
+        card.addEventListener("click", () => openPatientProfile(p.id));
+        container.appendChild(card);
+      });
+    }
+
+    // Open Patient Profile Detail View
+    function openPatientProfile(patientId) {
+      activePatientId = patientId;
+      const p = patients.find(item => item.id === patientId);
+      if (!p) return;
+
+      document.getElementById("detail-patient-name").textContent = p.name;
+      document.getElementById("detail-patient-phone").textContent = p.phone || "بدون رقم";
+      document.getElementById("detail-patient-alert").textContent = p.medicalAlert || "لا توجد موانع طبية";
+      document.getElementById("detail-patient-plan").textContent = p.treatmentPlan || "خطة علاج عامة";
+
+      ensurePatientPayments(p);
+      const balance = p.totalCost - p.paidCost;
+      document.getElementById("detail-financial-total").textContent = `${p.totalCost} ج.م`;
+      document.getElementById("detail-financial-paid").textContent = `${p.paidCost} ج.م`;
+      document.getElementById("detail-financial-balance").textContent = `${balance} ج.م`;
+
+      // Render Dated Payments History
+      const paymentsListEl = document.getElementById("detail-payments-history-list");
+      const paymentsCountEl = document.getElementById("detail-payments-count");
+      if (paymentsListEl && paymentsCountEl) {
+        paymentsListEl.innerHTML = "";
+        paymentsCountEl.textContent = `${p.payments.length} دفعات`;
+        if (p.payments.length === 0) {
+          paymentsListEl.innerHTML = `<p class="text-[11px] text-slate-400 text-center py-1">لا توجد دفعات مسجلة بالتاريخ بعد</p>`;
+        } else {
+          // Sort payments newest first
+          const sortedPays = [...p.payments].sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+          sortedPays.forEach(pay => {
+            const row = document.createElement("div");
+            row.className = "flex items-center justify-between bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200 text-[11px]";
+            row.innerHTML = `
+              <div class="flex items-center gap-2">
+                <span class="font-black text-emerald-700">${pay.amount} ج.م</span>
+                <span class="font-mono text-slate-500 bg-white px-1.5 py-0.5 rounded border border-slate-200">${pay.date}</span>
+                ${pay.note ? `<span class="text-slate-600 truncate max-w-[110px]">${pay.note}</span>` : ""}
+              </div>
+              <div class="flex items-center gap-1">
+                <button type="button" class="btn-edit-payment text-brand-600 hover:bg-brand-50 px-1.5 py-0.5 rounded font-bold" data-payid="${pay.id}">تعديل</button>
+                <button type="button" class="btn-delete-payment text-rose-600 hover:bg-rose-50 px-1.5 py-0.5 rounded font-bold" data-payid="${pay.id}">×</button>
+              </div>
+            `;
+            row.querySelector(".btn-edit-payment").addEventListener("click", () => {
+              document.getElementById("modal-payment-title").textContent = "تعديل الدفعة وتاريخها";
+              document.getElementById("input-payment-patient-id").value = p.id;
+              document.getElementById("input-payment-edit-id").value = pay.id;
+              document.getElementById("input-payment-amount").value = pay.amount;
+              document.getElementById("input-payment-date").value = pay.date || new Date().toISOString().split("T")[0];
+              document.getElementById("input-payment-note").value = pay.note || "";
+              openModal("modal-record-payment");
+            });
+            row.querySelector(".btn-delete-payment").addEventListener("click", () => {
+              p.payments = p.payments.filter(item => item.id !== pay.id);
+              recalcPatientPaid(p);
+              saveData();
+              showToast("تم حذف الدفعة وتحديث الرصيد");
+              openPatientProfile(p.id);
+            });
+            paymentsListEl.appendChild(row);
+          });
+        }
+      }
+
+      // Render Upcoming Session
+      const upcomingContainer = document.getElementById("detail-upcoming-content");
+      const completeBtn = document.getElementById("btn-complete-upcoming-session");
+      const reschedBtn = document.getElementById("btn-reschedule-upcoming");
+
+      if (p.upcomingSession) {
+        completeBtn.classList.remove("hidden");
+        reschedBtn.classList.remove("hidden");
+        upcomingContainer.innerHTML = `
+          <div class="bg-white p-3 rounded-xl border border-brand-200 space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-black text-brand-800">${p.upcomingSession.procedure}</span>
+              <span class="text-xs font-bold font-mono text-slate-600 bg-slate-100 px-2 py-0.5 rounded">${p.upcomingSession.time}</span>
+            </div>
+            <p class="text-xs text-slate-500 font-semibold">التاريخ: ${p.upcomingSession.date}</p>
+            ${(p.upcomingSession.wire && p.upcomingSession.wire !== "بدون تغيير") || (p.upcomingSession.wireType && p.upcomingSession.wireType !== "بدون") ? `
+              <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                ${p.upcomingSession.wire && p.upcomingSession.wire !== "بدون تغيير" ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200">الواير: ${p.upcomingSession.wire}</span>` : ""}
+                ${p.upcomingSession.wireType && p.upcomingSession.wireType !== "بدون" ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200">النوع: ${p.upcomingSession.wireType}</span>` : ""}
+              </div>
+            ` : ""}
+            ${p.upcomingSession.notes ? `<p class="text-[11px] text-slate-600 bg-slate-50 p-1.5 rounded mt-1">${p.upcomingSession.notes}</p>` : ""}
+          </div>
+        `;
+      } else {
+        completeBtn.classList.add("hidden");
+        reschedBtn.classList.add("hidden");
+        upcomingContainer.innerHTML = `
+          <div class="text-center py-2 text-slate-400 text-xs">
+            لا يوجد موعد قادم مجدول حالياً لهذا المريض.
+          </div>
+        `;
+      }
+
+      // Render Past Sessions Timeline
+      const timelineContainer = document.getElementById("detail-past-sessions-timeline");
+      timelineContainer.innerHTML = "";
+
+      if (!p.pastSessions || p.pastSessions.length === 0) {
+        timelineContainer.innerHTML = `
+          <div class="bg-white p-4 rounded-xl border border-slate-200 text-center text-slate-400 text-xs">
+            لا توجد جلسات سابقة مسجلة بعد.
+          </div>
+        `;
+      } else {
+        p.pastSessions.forEach((ps, idx) => {
+          const item = document.createElement("div");
+          item.className = "bg-white p-3.5 rounded-xl border border-slate-200 space-y-1.5 text-xs relative";
+          item.innerHTML = `
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="w-5 h-5 rounded-full bg-slate-100 text-slate-600 text-[10px] font-bold flex items-center justify-center">
+                  ${p.pastSessions.length - idx}
+                </span>
+                <span class="font-bold text-slate-800">${ps.procedure}</span>
+              </div>
+              <div class="flex items-center gap-1.5">
+                <span class="text-[11px] font-mono text-slate-500 bg-slate-50 px-1.5 py-0.5 rounded border border-slate-200">${ps.date}${ps.time ? " • " + ps.time : ""}</span>
+                <button type="button" class="btn-edit-past-session text-[10px] font-bold text-brand-600 bg-brand-50 hover:bg-brand-100 border border-brand-200 px-2 py-0.5 rounded-lg transition">تعديل</button>
+                <button type="button" class="btn-delete-past-session text-[10px] font-bold text-rose-600 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-1.5 py-0.5 rounded-lg transition" title="حذف الجلسة">×</button>
+              </div>
+            </div>
+            ${(ps.wire && ps.wire !== "بدون تغيير") || (ps.wireType && ps.wireType !== "بدون") ? `
+              <div class="flex flex-wrap items-center gap-1.5 pt-0.5">
+                ${ps.wire && ps.wire !== "بدون تغيير" ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-teal-50 text-teal-800 border border-teal-200">الواير: ${ps.wire}</span>` : ""}
+                ${ps.wireType && ps.wireType !== "بدون" ? `<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-50 text-indigo-800 border border-indigo-200">النوع: ${ps.wireType}</span>` : ""}
+              </div>
+            ` : ""}
+            ${ps.notes ? `<p class="text-slate-600 text-[11px] bg-slate-50 p-2 rounded-lg mt-1">${ps.notes}</p>` : ""}
+            ${ps.payment ? `
+              <div class="text-left pt-0.5">
+                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
+                  تم دفع: ${ps.payment} ج.م
+                </span>
+              </div>
+            ` : ""}
+          `;
+
+          item.querySelector(".btn-edit-past-session").addEventListener("click", () => {
+            openEditPastSessionModal(p.id, ps.id);
+          });
+
+          item.querySelector(".btn-delete-past-session").addEventListener("click", () => {
+            p.pastSessions = p.pastSessions.filter(sItem => sItem.id !== ps.id);
+            saveData();
+            showToast("تم حذف الجلسة من السجل");
+            openPatientProfile(p.id);
+          });
+
+          timelineContainer.appendChild(item);
+        });
+      }
+
+      // Attach WhatsApp Reminder in Patient Detail
+      const waReminderBtn = document.getElementById("btn-patient-whatsapp-reminder");
+      if (waReminderBtn) {
+        if (p.upcomingSession && p.phone) {
+          waReminderBtn.classList.remove("hidden");
+          waReminderBtn.onclick = () => sendWhatsAppReminder(p.phone, p.name, p.upcomingSession.date, p.upcomingSession.time, p.upcomingSession.procedure);
+        } else {
+          waReminderBtn.classList.add("hidden");
+        }
+      }
+
+      // Show Patient Detail View
+      document.querySelectorAll("main > section").forEach(sec => sec.classList.add("hidden"));
+      document.getElementById("view-patient-detail").classList.remove("hidden");
+    }
+
+    // Modal Helpers
+    function openModal(id) {
+      document.getElementById(id).classList.remove("hidden");
+    }
+    function closeModal(id) {
+      document.getElementById(id).classList.add("hidden");
+    }
+
+    function openCompleteModal(patientId) {
+      activePatientId = patientId;
+      const p = patients.find(item => item.id === patientId);
+      if (!p) return;
+
+      document.getElementById("input-complete-patient-id").value = p.id;
+      const upProc = p.upcomingSession ? p.upcomingSession.procedure : "Follow up";
+      const upWire = (p.upcomingSession && p.upcomingSession.wire) ? p.upcomingSession.wire : "بدون تغيير";
+      const upWireType = (p.upcomingSession && p.upcomingSession.wireType) ? p.upcomingSession.wireType : "بدون";
+
+      populateOrthoDropdowns("", "", "", upProc, upWire, upWireType);
+      document.getElementById("input-complete-notes").value = p.upcomingSession && p.upcomingSession.notes ? p.upcomingSession.notes : "";
+      document.getElementById("input-complete-payment").value = "0";
+      
+      // Auto suggest next Friday date
+      const nextDate = new Date();
+      nextDate.setDate(nextDate.getDate() + 7);
+      document.getElementById("input-next-after-complete-date").value = nextDate.toISOString().split("T")[0];
+
+      openModal("modal-complete-session");
+    }
+
+    function openEditPastSessionModal(patientId, sessionId = "") {
+      activePatientId = patientId;
+      const p = patients.find(item => item.id === patientId);
+      if (!p) return;
+
+      document.getElementById("input-past-session-patient-id").value = p.id;
+      document.getElementById("input-past-session-id").value = sessionId;
+
+      populateOrthoDropdowns();
+
+      if (sessionId) {
+        document.getElementById("modal-past-session-title").textContent = "تعديل بيانات الجلسة السابقة";
+        const ps = (p.pastSessions || []).find(s => s.id === sessionId);
+        if (!ps) return;
+        document.getElementById("input-past-session-date").value = ps.date || "2026-10-16";
+        document.getElementById("input-past-session-time").value = ps.time || "05:00 PM";
+        
+        // Ensure procedure, wire, wireType exist in select options
+        const procSel = document.getElementById("input-past-session-procedure");
+        if (ps.procedure && !customOptions.procedures.includes(ps.procedure)) {
+          customOptions.procedures.unshift(ps.procedure);
+        }
+        if (ps.wire && !customOptions.wires.includes(ps.wire)) {
+          customOptions.wires.unshift(ps.wire);
+        }
+        if (ps.wireType && !customOptions.wireTypes.includes(ps.wireType)) {
+          customOptions.wireTypes.unshift(ps.wireType);
+        }
+        populateOrthoDropdowns();
+
+        procSel.value = ps.procedure || customOptions.procedures[0];
+        document.getElementById("input-past-session-wire").value = ps.wire || "بدون تغيير";
+        document.getElementById("input-past-session-wire-type").value = ps.wireType || "بدون";
+        document.getElementById("input-past-session-notes").value = ps.notes || "";
+        document.getElementById("input-past-session-payment").value = ps.payment || 0;
+      } else {
+        document.getElementById("modal-past-session-title").textContent = "إضافة جلسة سابقة للهيستوري";
+        document.getElementById("form-edit-past-session").reset();
+        document.getElementById("input-past-session-patient-id").value = p.id;
+        document.getElementById("input-past-session-id").value = "";
+        document.getElementById("input-past-session-date").value = "2026-10-16";
+        document.getElementById("input-past-session-time").value = "05:00 PM";
+        document.getElementById("input-past-session-payment").value = "0";
+      }
+
+      openModal("modal-edit-past-session");
+    }
+
+    function openScheduleModalFromCalendar() {
+      document.getElementById("form-schedule-session").reset();
+      populatePatientSelector(activePatientId || (patients[0] ? patients[0].id : ""));
+      const selPatientId = document.getElementById("select-session-patient").value;
+      document.getElementById("input-session-patient-id").value = selPatientId;
+      document.getElementById("input-session-date").value = selectedDate || "2026-10-23";
+      populateOrthoDropdowns();
+      populateSessionTimeSelect();
+      openModal("modal-schedule-session");
+    }
+
+    // Overall Finances View
+    function renderFinances() {
+      let totalRev = 0;
+      let totalPaid = 0;
+      patients.forEach(p => {
+        totalRev += (p.totalCost || 0);
+        totalPaid += (p.paidCost || 0);
+      });
+      const remaining = totalRev - totalPaid;
+
+      document.getElementById("finance-total-patients").textContent = patients.length;
+      document.getElementById("finance-total-revenue").textContent = `${totalRev.toLocaleString()} ج.م`;
+      document.getElementById("finance-total-collected").textContent = `${totalPaid.toLocaleString()} ج.م`;
+      document.getElementById("finance-total-remaining").textContent = `${remaining.toLocaleString()} ج.م`;
+    }
+
+    // Setup Event Listeners
+    function setupEvents() {
+      // Nav Tabs
+      document.querySelectorAll(".nav-tab").forEach(tab => {
+        tab.addEventListener("click", () => switchTab(tab.dataset.target));
+      });
+
+      // Close Modals
+      document.querySelectorAll(".btn-close-modal").forEach(btn => {
+        btn.addEventListener("click", (e) => {
+          const modal = e.target.closest(".fixed");
+          if (modal) modal.classList.add("hidden");
+        });
+      });
+
+      // Quick Add Patient button
+      document.getElementById("btn-open-quick-add").addEventListener("click", () => {
+        document.getElementById("form-new-patient").reset();
+        openModal("modal-add-patient");
+      });
+
+      // Jump to next Friday
+      document.getElementById("btn-jump-next-friday").addEventListener("click", () => {
+        selectedDate = "2026-10-23";
+        document.getElementById("label-selected-date").textContent = "الجمعة، 23 أكتوبر 2026";
+        renderFridayChips();
+        renderCalendarView();
+      });
+
+      // Search Patients
+      const searchInput = document.getElementById("input-patient-search");
+      searchInput.addEventListener("input", () => {
+        const activeChip = document.querySelector(".filter-chip.active");
+        const filterVal = activeChip ? activeChip.dataset.filter : "all";
+        renderPatientsDirectory(searchInput.value, filterVal);
+      });
+
+      // Filter Chips
+      document.querySelectorAll(".filter-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".filter-chip").forEach(c => {
+            c.classList.remove("active", "bg-brand-600", "text-white");
+            c.classList.add("bg-slate-100", "text-slate-600");
+          });
+          chip.classList.add("active", "bg-brand-600", "text-white");
+          chip.classList.remove("bg-slate-100", "text-slate-600");
+          renderPatientsDirectory(searchInput.value, chip.dataset.filter);
+        });
+      });
+
+      // Back from Patient Detail
+      document.getElementById("btn-back-from-detail").addEventListener("click", () => {
+        switchTab("view-patients");
+      });
+
+      // Open Edit Patient Modal
+      document.getElementById("btn-edit-patient-info").addEventListener("click", () => {
+        if (!activePatientId) return;
+        const p = patients.find(item => item.id === activePatientId);
+        if (!p) return;
+        document.getElementById("input-edit-patient-id").value = p.id;
+        document.getElementById("input-edit-name").value = p.name;
+        document.getElementById("input-edit-phone").value = p.phone || "";
+        document.getElementById("input-edit-alert").value = p.medicalAlert || "لا توجد موانع طبية";
+        document.getElementById("input-edit-plan").value = p.treatmentPlan || "";
+        document.getElementById("input-edit-total").value = p.totalCost || 0;
+        document.getElementById("input-edit-paid").value = p.paidCost || 0;
+        openModal("modal-edit-patient");
+      });
+
+      // Form: Edit Patient Submit
+      document.getElementById("form-edit-patient").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const pId = document.getElementById("input-edit-patient-id").value;
+        const p = patients.find(item => item.id === pId);
+        if (p) {
+          p.name = document.getElementById("input-edit-name").value.trim();
+          p.phone = document.getElementById("input-edit-phone").value.trim();
+          p.medicalAlert = document.getElementById("input-edit-alert").value;
+          p.treatmentPlan = document.getElementById("input-edit-plan").value.trim();
+          p.totalCost = parseFloat(document.getElementById("input-edit-total").value) || 0;
+          p.paidCost = parseFloat(document.getElementById("input-edit-paid").value) || 0;
+          saveData();
+          closeModal("modal-edit-patient");
+          showToast("تم تحديث بيانات المريض بنجاح");
+          openPatientProfile(pId);
+        }
+      });
+
+      // Open Delete Patient Prompt
+      document.getElementById("btn-delete-patient-prompt").addEventListener("click", () => {
+        if (!activePatientId) return;
+        const p = patients.find(item => item.id === activePatientId);
+        if (!p) return;
+        document.getElementById("delete-patient-name-span").textContent = p.name;
+        openModal("modal-confirm-delete");
+      });
+
+      // Confirm Delete Action
+      document.getElementById("btn-confirm-delete-action").addEventListener("click", () => {
+        if (!activePatientId) return;
+        patients = patients.filter(item => item.id !== activePatientId);
+        saveData();
+        closeModal("modal-confirm-delete");
+        showToast("تم مسح ملف المريض بنجاح");
+        switchTab("view-patients");
+      });
+
+      // Free Date Picker in Calendar
+      const freeDateInput = document.getElementById("input-calendar-free-date");
+      if (freeDateInput) {
+        freeDateInput.addEventListener("change", () => {
+          if (freeDateInput.value) {
+            selectedDate = freeDateInput.value;
+            document.getElementById("label-selected-date").textContent = selectedDate;
+            renderFridayChips();
+            renderCalendarView();
+          }
+        });
+      }
+
+      // Sync Start/End 24h inputs with custom time range string
+      const start24Input = document.getElementById("input-session-start-24");
+      const end24Input = document.getElementById("input-session-end-24");
+      const syncStartEndRange = () => {
+        if (start24Input.value && end24Input.value) {
+          const rangeStr = `${formatTime24to12(start24Input.value)} → ${formatTime24to12(end24Input.value)}`;
+          document.getElementById("input-session-custom-time").value = rangeStr;
+          document.getElementById("input-session-time").value = "custom";
+          document.getElementById("container-custom-time").classList.remove("hidden");
+        }
+      };
+      if (start24Input && end24Input) {
+        start24Input.addEventListener("input", syncStartEndRange);
+        end24Input.addEventListener("input", syncStartEndRange);
+      }
+
+      // Toggle Custom Time in Schedule Modal
+      const sessionTimeSelect = document.getElementById("input-session-time");
+      sessionTimeSelect.addEventListener("change", () => {
+        const customContainer = document.getElementById("container-custom-time");
+        if (sessionTimeSelect.value === "custom") {
+          customContainer.classList.remove("hidden");
+          document.getElementById("input-session-custom-time").focus();
+        } else {
+          customContainer.classList.add("hidden");
+          document.getElementById("input-session-custom-time").value = sessionTimeSelect.value;
+        }
+      });
+
+      // Quick Tooth Buttons
+      document.querySelectorAll(".btn-quick-tooth").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const procSelect = document.getElementById("input-session-procedure");
+          const val = btn.dataset.val;
+          if (procSelect.value.includes(val)) return;
+          const combined = procSelect.value ? `${procSelect.value} (${val})` : val;
+          if (!customOptions.procedures.includes(combined)) {
+            customOptions.procedures.unshift(combined);
+            saveCustomOptions();
+          }
+          populateOrthoDropdowns(combined, document.getElementById("input-session-wire").value, document.getElementById("input-session-wire-type").value);
+        });
+      });
+
+      // Open Shift Settings Modal
+      const openShiftModal = () => {
+        document.getElementById("input-shift-title").value = shiftSettings.title;
+        document.getElementById("input-shift-start").value = shiftSettings.startTime;
+        document.getElementById("input-shift-end").value = shiftSettings.endTime;
+        document.getElementById("input-shift-interval").value = String(shiftSettings.interval);
+        
+        const preview = document.getElementById("preview-shift-range");
+        if (preview) {
+          preview.textContent = `من ${formatTimeArabic(shiftSettings.startTime)} إلى ${formatTimeArabic(shiftSettings.endTime)} (كل ${shiftSettings.interval} دقيقة)`;
+        }
+        openModal("modal-shift-settings");
+      };
+
+      document.getElementById("btn-open-shift-settings").addEventListener("click", openShiftModal);
+      const headerShiftBadge = document.getElementById("header-shift-badge");
+      if (headerShiftBadge) headerShiftBadge.addEventListener("click", openShiftModal);
+      const calShiftBtn = document.getElementById("btn-calendar-edit-shift");
+      if (calShiftBtn) calShiftBtn.addEventListener("click", openShiftModal);
+
+      // Shift Settings Preview on Input
+      const updateSettingsPreview = () => {
+        const sTime = document.getElementById("input-shift-start").value;
+        const eTime = document.getElementById("input-shift-end").value;
+        const interv = document.getElementById("input-shift-interval").value;
+        const preview = document.getElementById("preview-shift-range");
+        if (preview && sTime && eTime) {
+          preview.textContent = `من ${formatTimeArabic(sTime)} إلى ${formatTimeArabic(eTime)} (كل ${interv} دقيقة)`;
+        }
+      };
+      document.getElementById("input-shift-start").addEventListener("input", updateSettingsPreview);
+      document.getElementById("input-shift-end").addEventListener("input", updateSettingsPreview);
+      document.getElementById("input-shift-interval").addEventListener("change", updateSettingsPreview);
+
+      // Form: Shift Settings Submit
+      document.getElementById("form-shift-settings").addEventListener("submit", (e) => {
+        e.preventDefault();
+        shiftSettings.title = document.getElementById("input-shift-title").value.trim() || "شيفت الجمعة";
+        shiftSettings.startTime = document.getElementById("input-shift-start").value;
+        shiftSettings.endTime = document.getElementById("input-shift-end").value;
+        shiftSettings.interval = parseInt(document.getElementById("input-shift-interval").value, 10) || 30;
+
+        saveShiftSettings();
+        updateShiftDisplayLabels();
+        closeModal("modal-shift-settings");
+        showToast("تم تحديث ساعات الشيفت وحفظها بنجاح");
+        renderCalendarView();
+      });
+
+      // Add Appointment directly from Calendar button
+      const calAddApptBtn = document.getElementById("btn-calendar-add-appointment");
+      if (calAddApptBtn) {
+        calAddApptBtn.addEventListener("click", () => {
+          openScheduleModalFromCalendar();
+        });
+      }
+
+      // Sync patient dropdown selection with hidden patient-id field
+      const patientSelectEl = document.getElementById("select-session-patient");
+      if (patientSelectEl) {
+        patientSelectEl.addEventListener("change", () => {
+          document.getElementById("input-session-patient-id").value = patientSelectEl.value;
+        });
+      }
+
+      // Quick button inside schedule modal to create a new patient if not in list
+      const modalQuickNewPatBtn = document.getElementById("btn-modal-quick-new-patient");
+      if (modalQuickNewPatBtn) {
+        modalQuickNewPatBtn.addEventListener("click", () => {
+          closeModal("modal-schedule-session");
+          document.getElementById("form-new-patient").reset();
+          openModal("modal-add-patient");
+        });
+      }
+
+      // Open Manage & Edit Options Modal buttons
+      document.querySelectorAll(".btn-open-manage-options").forEach(btn => {
+        btn.addEventListener("click", () => {
+          openManageOptionsModal(btn.dataset.cat || "procedures");
+        });
+      });
+
+      // Category Tabs inside Manage Options Modal
+      document.querySelectorAll(".tab-manage-cat").forEach(tab => {
+        tab.addEventListener("click", () => {
+          openManageOptionsModal(tab.dataset.cat);
+        });
+      });
+
+      // Add New Option inside Manage Options Modal
+      const manageAddBtn = document.getElementById("btn-manage-add-option");
+      const manageNewInp = document.getElementById("input-manage-new-option");
+      if (manageAddBtn && manageNewInp) {
+        const addFromManage = () => {
+          const val = manageNewInp.value.trim();
+          if (!val) return;
+          if (!customOptions[activeManageCategory].includes(val)) {
+            customOptions[activeManageCategory].unshift(val);
+            saveCustomOptions();
+            refreshAllOrthoSelectsPreservingValues();
+            renderManageOptionsList();
+            showToast(`تمت إضافة "${val}" بنجاح`);
+          }
+          manageNewInp.value = "";
+        };
+        manageAddBtn.addEventListener("click", addFromManage);
+        manageNewInp.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            addFromManage();
+          }
+        });
+      }
+
+      // Reset Default Options button
+      const resetOptsBtn = document.getElementById("btn-reset-default-options");
+      if (resetOptsBtn) {
+        resetOptsBtn.addEventListener("click", () => {
+          customOptions[activeManageCategory] = [...DEFAULT_CUSTOM_OPTIONS[activeManageCategory]];
+          saveCustomOptions();
+          refreshAllOrthoSelectsPreservingValues();
+          renderManageOptionsList();
+          showToast("تمت استعادة الخيارات الافتراضية لهذه القائمة");
+        });
+      }
+
+      // Toggle inline "+ خيار جديد" boxes
+      document.querySelectorAll(".btn-toggle-add-option").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const targetId = btn.dataset.target;
+          const box = document.getElementById(targetId);
+          if (box) {
+            box.classList.toggle("hidden");
+            const input = box.querySelector("input");
+            if (input && !box.classList.contains("hidden")) input.focus();
+          }
+        });
+      });
+
+      // Helper to wire up adding a new custom option to a category
+      const setupAddCustomOption = (btnId, inputId, boxId, categoryKey, targetSelectId) => {
+        const btn = document.getElementById(btnId);
+        const inp = document.getElementById(inputId);
+        const box = document.getElementById(boxId);
+        if (!btn || !inp || !box) return;
+        btn.addEventListener("click", () => {
+          const val = inp.value.trim();
+          if (!val) return;
+          if (!customOptions[categoryKey].includes(val)) {
+            customOptions[categoryKey].unshift(val);
+            saveCustomOptions();
+          }
+          // Preserve current selections while refreshing
+          const curSchedProc = document.getElementById("input-session-procedure").value;
+          const curSchedWire = document.getElementById("input-session-wire").value;
+          const curSchedType = document.getElementById("input-session-wire-type").value;
+          const curCompProc = document.getElementById("input-complete-procedure").value;
+          const curCompWire = document.getElementById("input-complete-wire").value;
+          const curCompType = document.getElementById("input-complete-wire-type").value;
+
+          populateOrthoDropdowns(curSchedProc, curSchedWire, curSchedType, curCompProc, curCompWire, curCompType);
+          const targetSelect = document.getElementById(targetSelectId);
+          if (targetSelect) targetSelect.value = val;
+
+          inp.value = "";
+          box.classList.add("hidden");
+          showToast(`تمت إضافة "${val}" لقائمة الاختيارات`);
+        });
+      };
+
+      setupAddCustomOption("btn-save-opt-proc-sched", "input-new-opt-proc-sched", "box-add-proc-sched", "procedures", "input-session-procedure");
+      setupAddCustomOption("btn-save-opt-wire-sched", "input-new-opt-wire-sched", "box-add-wire-sched", "wires", "input-session-wire");
+      setupAddCustomOption("btn-save-opt-wiretype-sched", "input-new-opt-wiretype-sched", "box-add-wiretype-sched", "wireTypes", "input-session-wire-type");
+
+      setupAddCustomOption("btn-save-opt-proc-comp", "input-new-opt-proc-comp", "box-add-proc-comp", "procedures", "input-complete-procedure");
+      setupAddCustomOption("btn-save-opt-wire-comp", "input-new-opt-wire-comp", "box-add-wire-comp", "wires", "input-complete-wire");
+      setupAddCustomOption("btn-save-opt-wiretype-comp", "input-new-opt-wiretype-comp", "box-add-wiretype-comp", "wireTypes", "input-complete-wire-type");
+
+      // Schedule New Session Button (from Patient Profile)
+      document.getElementById("btn-schedule-new-session").addEventListener("click", () => {
+        if (!activePatientId) return;
+        document.getElementById("form-schedule-session").reset();
+        populatePatientSelector(activePatientId);
+        document.getElementById("input-session-patient-id").value = activePatientId;
+        document.getElementById("input-session-date").value = selectedDate || "2026-10-23";
+        populateOrthoDropdowns();
+        populateSessionTimeSelect();
+        openModal("modal-schedule-session");
+      });
+
+      document.getElementById("btn-reschedule-upcoming").addEventListener("click", () => {
+        if (!activePatientId) return;
+        populatePatientSelector(activePatientId);
+        document.getElementById("input-session-patient-id").value = activePatientId;
+        const p = patients.find(item => item.id === activePatientId);
+        if (p && p.upcomingSession) {
+          document.getElementById("input-session-date").value = p.upcomingSession.date;
+          populateOrthoDropdowns(p.upcomingSession.procedure, p.upcomingSession.wire || "", p.upcomingSession.wireType || "");
+          document.getElementById("input-session-notes").value = p.upcomingSession.notes || "";
+          populateSessionTimeSelect(p.upcomingSession.time);
+        } else {
+          populateOrthoDropdowns();
+          populateSessionTimeSelect();
+        }
+        openModal("modal-schedule-session");
+      });
+
+      // Complete Upcoming Session Button
+      document.getElementById("btn-complete-upcoming-session").addEventListener("click", () => {
+        if (activePatientId) openCompleteModal(activePatientId);
+      });
+
+      setupAddCustomOption("btn-save-opt-proc-past", "input-new-opt-proc-past", "box-add-proc-past", "procedures", "input-past-session-procedure");
+
+      // Add Past Session Directly to History Button
+      const addPastSessionBtn = document.getElementById("btn-add-past-session-modal");
+      if (addPastSessionBtn) {
+        addPastSessionBtn.addEventListener("click", () => {
+          if (!activePatientId) return;
+          openEditPastSessionModal(activePatientId, "");
+        });
+      }
+
+      // Form: Edit or Add Past Session Submit
+      document.getElementById("form-edit-past-session").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const pId = document.getElementById("input-past-session-patient-id").value;
+        const sId = document.getElementById("input-past-session-id").value;
+        const p = patients.find(item => item.id === pId);
+        if (!p) return;
+
+        ensurePatientPayments(p);
+        if (!p.pastSessions) p.pastSessions = [];
+
+        const dateVal = document.getElementById("input-past-session-date").value;
+        const timeVal = document.getElementById("input-past-session-time").value.trim() || "05:00 PM";
+        const procVal = document.getElementById("input-past-session-procedure").value;
+        const wireVal = document.getElementById("input-past-session-wire").value;
+        const wireTypeVal = document.getElementById("input-past-session-wire-type").value;
+        const notesVal = document.getElementById("input-past-session-notes").value.trim();
+        const payVal = parseFloat(document.getElementById("input-past-session-payment").value) || 0;
+
+        if (sId) {
+          // Editing existing past session
+          const ps = p.pastSessions.find(s => s.id === sId);
+          if (ps) {
+            ps.date = dateVal;
+            ps.time = timeVal;
+            ps.procedure = procVal;
+            ps.wire = wireVal;
+            ps.wireType = wireTypeVal;
+            ps.notes = notesVal;
+            ps.payment = payVal;
+
+            // Sync corresponding payment record if exists
+            const linkedPay = p.payments.find(pay => pay.id === "pay_" + sId);
+            if (linkedPay) {
+              if (payVal > 0) {
+                linkedPay.amount = payVal;
+                linkedPay.date = dateVal;
+                linkedPay.note = `دفعة جلسة (${procVal})`;
+              } else {
+                p.payments = p.payments.filter(pay => pay.id !== "pay_" + sId);
+              }
+            } else if (payVal > 0) {
+              p.payments.unshift({
+                id: "pay_" + sId,
+                amount: payVal,
+                date: dateVal,
+                note: `دفعة جلسة (${procVal})`
+              });
+            }
+            recalcPatientPaid(p);
+          }
+          showToast("تم تعديل بيانات الجلسة السابقة بنجاح");
+        } else {
+          // Adding new past session to history
+          const newSessionId = "s_" + Date.now();
+          p.pastSessions.push({
+            id: newSessionId,
+            date: dateVal,
+            time: timeVal,
+            procedure: procVal,
+            wire: wireVal,
+            wireType: wireTypeVal,
+            notes: notesVal,
+            payment: payVal
+          });
+          // Sort pastSessions newest first
+          p.pastSessions.sort((a, b) => (b.date || "").localeCompare(a.date || ""));
+
+          if (payVal > 0) {
+            p.payments.unshift({
+              id: "pay_" + newSessionId,
+              amount: payVal,
+              date: dateVal,
+              note: `دفعة جلسة (${procVal})`
+            });
+            recalcPatientPaid(p);
+          }
+          showToast("تمت إضافة الجلسة السابقة للهيستوري");
+        }
+
+        saveData();
+        closeModal("modal-edit-past-session");
+        openPatientProfile(pId);
+      });
+
+      // Add Payment Button
+      document.getElementById("btn-add-payment-modal").addEventListener("click", () => {
+        if (!activePatientId) return;
+        document.getElementById("modal-payment-title").textContent = "تسجيل دفعة نقدية جديدة";
+        document.getElementById("form-record-payment").reset();
+        document.getElementById("input-payment-patient-id").value = activePatientId;
+        document.getElementById("input-payment-edit-id").value = "";
+        document.getElementById("input-payment-date").value = selectedDate || new Date().toISOString().split("T")[0];
+        openModal("modal-record-payment");
+      });
+
+      // Form: New Patient
+      document.getElementById("form-new-patient").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = document.getElementById("input-new-name").value.trim();
+        const phone = document.getElementById("input-new-phone").value.trim();
+        const alert = document.getElementById("input-new-alert").value;
+        const plan = document.getElementById("input-new-plan").value.trim();
+        const total = parseFloat(document.getElementById("input-new-total").value) || 0;
+        const paid = parseFloat(document.getElementById("input-new-paid").value) || 0;
+
+        const todayDate = selectedDate || new Date().toISOString().split("T")[0];
+        const newPatient = {
+          id: "p_" + Date.now(),
+          name: name,
+          phone: phone,
+          medicalAlert: alert,
+          treatmentPlan: plan,
+          totalCost: total,
+          paidCost: paid,
+          payments: paid > 0 ? [{ id: "pay_init_" + Date.now(), amount: paid, date: todayDate, note: "دفعة مقدم تعاقد" }] : [],
+          upcomingSession: null,
+          pastSessions: []
+        };
+
+        patients.unshift(newPatient);
+        saveData();
+        closeModal("modal-add-patient");
+        showToast("تمت إضافة المريض بنجاح");
+        openPatientProfile(newPatient.id);
+      });
+
+      // Form: Schedule Session
+      document.getElementById("form-schedule-session").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const selPatId = document.getElementById("select-session-patient").value;
+        const pId = selPatId || document.getElementById("input-session-patient-id").value;
+        const date = document.getElementById("input-session-date").value;
+        let time = document.getElementById("input-session-time").value;
+        if (time === "custom") {
+          time = document.getElementById("input-session-custom-time").value.trim() || "05:00 PM";
+        }
+        const proc = document.getElementById("input-session-procedure").value.trim();
+        const wire = document.getElementById("input-session-wire").value;
+        const wireType = document.getElementById("input-session-wire-type").value;
+        const notes = document.getElementById("input-session-notes").value.trim();
+
+        const p = patients.find(item => item.id === pId);
+        if (p) {
+          p.upcomingSession = {
+            date: date,
+            time: time,
+            procedure: proc,
+            wire: wire,
+            wireType: wireType,
+            notes: notes,
+            status: "Scheduled"
+          };
+          saveData();
+          closeModal("modal-schedule-session");
+          showToast(`تم حجز موعد (${p.name}) بنجاح`);
+          const isCalendarVisible = !document.getElementById("view-calendar").classList.contains("hidden");
+          if (isCalendarVisible) {
+            selectedDate = date;
+            document.getElementById("label-selected-date").textContent = date;
+            renderFridayChips();
+            renderCalendarView();
+          } else {
+            openPatientProfile(pId);
+          }
+        }
+      });
+
+      // Form: Complete Session (Automated Move to History!)
+      document.getElementById("form-complete-session").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const pId = document.getElementById("input-complete-patient-id").value;
+        const procDone = document.getElementById("input-complete-procedure").value.trim();
+        const wireDone = document.getElementById("input-complete-wire").value;
+        const wireTypeDone = document.getElementById("input-complete-wire-type").value;
+        const notes = document.getElementById("input-complete-notes").value.trim();
+        const payment = parseFloat(document.getElementById("input-complete-payment").value) || 0;
+
+        const nextDate = document.getElementById("input-next-after-complete-date").value;
+        const nextProc = document.getElementById("input-next-after-complete-procedure").value.trim();
+
+        const p = patients.find(item => item.id === pId);
+        if (p) {
+          const completedDate = (p.upcomingSession && p.upcomingSession.date) ? p.upcomingSession.date : new Date().toISOString().split("T")[0];
+          const completedTime = (p.upcomingSession && p.upcomingSession.time) ? p.upcomingSession.time : "05:00 PM";
+
+          ensurePatientPayments(p);
+          const newSessId = "s_" + Date.now();
+
+          // 1. Move to Past Sessions (History) with Wire & Wire Type preserved!
+          if (!p.pastSessions) p.pastSessions = [];
+          p.pastSessions.unshift({
+            id: "s_" + Date.now(),
+            date: completedDate,
+            time: completedTime,
+            procedure: procDone,
+            wire: wireDone,
+            wireType: wireTypeDone,
+            notes: notes,
+            payment: payment
+          });
+
+          // 2. Add Dated Payment to Patient Payments Log & Recalculate Total
+          if (payment > 0) {
+            p.payments.unshift({
+              id: "pay_" + newSessId,
+              amount: payment,
+              date: completedDate,
+              note: `دفعة جلسة (${procDone})`
+            });
+            recalcPatientPaid(p);
+          }
+
+          // 3. Automate Next Session
+          if (nextDate && nextProc) {
+            p.upcomingSession = {
+              date: nextDate,
+              time: completedTime,
+              procedure: nextProc,
+              wire: wireDone,
+              wireType: wireTypeDone,
+              notes: "",
+              status: "Scheduled"
+            };
+          } else {
+            p.upcomingSession = null;
+          }
+
+          saveData();
+          closeModal("modal-complete-session");
+          showToast("تم ترحيل الجلسة والواير للهيستوري بنجاح!");
+          openPatientProfile(pId);
+        }
+      });
+
+      // Form: Record or Edit Dated Payment
+      document.getElementById("form-record-payment").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const pId = document.getElementById("input-payment-patient-id").value;
+        const editPayId = document.getElementById("input-payment-edit-id").value;
+        const amount = parseFloat(document.getElementById("input-payment-amount").value) || 0;
+        const dateVal = document.getElementById("input-payment-date").value || new Date().toISOString().split("T")[0];
+        const noteVal = document.getElementById("input-payment-note").value.trim() || "دفعة نقدية";
+
+        const p = patients.find(item => item.id === pId);
+        if (p && amount > 0) {
+          ensurePatientPayments(p);
+          if (editPayId) {
+            const existing = p.payments.find(item => item.id === editPayId);
+            if (existing) {
+              existing.amount = amount;
+              existing.date = dateVal;
+              existing.note = noteVal;
+            }
+            showToast("تم تعديل الدفعة وتاريخها بنجاح");
+          } else {
+            p.payments.unshift({
+              id: "pay_" + Date.now(),
+              amount: amount,
+              date: dateVal,
+              note: noteVal
+            });
+            showToast(`تم تسجيل دفعة ${amount} ج.م بتاريخ ${dateVal}`);
+          }
+          recalcPatientPaid(p);
+          saveData();
+          closeModal("modal-record-payment");
+          openPatientProfile(pId);
+        }
+      });
+
+      // Backup & Export JSON
+      const exportBtn = document.getElementById("btn-export-json");
+      const exportTopBtn = document.getElementById("btn-export-data");
+      const exportFn = () => {
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(patients, null, 2));
+        const downloadAnchor = document.createElement("a");
+        downloadAnchor.setAttribute("href", dataStr);
+        downloadAnchor.setAttribute("download", `dr_galhom_patients_backup_${new Date().toISOString().split("T")[0]}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+        showToast("تم تنزيل النسخة الاحتياطية بنجاح");
+      };
+      exportBtn.addEventListener("click", exportFn);
+      exportTopBtn.addEventListener("click", exportFn);
+
+      // Import JSON
+      document.getElementById("input-import-json").addEventListener("change", (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          try {
+            const imported = JSON.parse(event.target.result);
+            if (Array.isArray(imported)) {
+              patients = imported;
+              saveData();
+              showToast("تم استيراد البيانات بنجاح!");
+              switchTab("view-patients");
+            }
+          } catch (err) {
+            showToast("الملف غير صالح", "error");
+          }
+        };
+        reader.readAsText(file);
+      });
+    }
+
+    // Initialize App
+    window.addEventListener("DOMContentLoaded", () => {
+      loadData();
+      updateShiftDisplayLabels();
+      populatePatientSelector();
+      populateOrthoDropdowns();
+      renderFridayChips();
+      renderCalendarView();
+      setupEvents();
+    });
+  </script>
+</body>
+</html>
